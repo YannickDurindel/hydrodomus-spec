@@ -1,0 +1,144 @@
+%--------------------------------------------------------------------------------------------------------------------
+%--------------------------------  packages + package settings-------------------------------------------------------
+%--------------------------------------------------------------------------------------------------------------------
+\documentclass[11pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage[final]{graphicx}
+    \graphicspath{{./images/}{./figures/}}
+\usepackage{caption}
+    \captionsetup{justification=raggedright,singlelinecheck=false}
+\usepackage{subcaption}
+\usepackage{geometry}
+    \geometry{
+        a4paper,
+        width=150mm,
+        top=25mm,
+        bottom=25mm,
+        }
+\usepackage{fancyhdr}
+    \pagestyle{fancy}
+    \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+    \setlength{\headheight}{15pt}
+    \fancyhead{}
+    \fancyhead[R]{\leftmark}
+    \fancyhead[L]{Hydrodomus}
+    \fancyfoot{}
+    \fancyfoot[R]{\thepage}
+    \fancyfoot[L]{Y. Durindel}
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+\usepackage{extramarks}
+\usepackage[titles]{tocloft}
+    \renewcommand{\cftfigpresnum}{Fig.\ }
+    \renewcommand{\cfttabpresnum}{Tab.\ }
+    \newlength{\mylenf}
+    \settowidth{\mylenf}{\cftfigpresnum}
+    \setlength{\cftfignumwidth}{\dimexpr\mylenf+2em}
+    \settowidth{\mylenf}{\cfttabpresnum}
+    \setlength{\cfttabnumwidth}{\dimexpr\mylenf+2em}
+    \setlength{\cfttabindent}{0pt}
+    \setlength{\cftfigindent}{0pt}
+\usepackage{parskip}
+    \setlength\parskip{1ex}
+    \setlength\parindent{0pt}
+\usepackage{titlesec}
+    \titlespacing*{\section}
+       {0pt}{4ex plus 1ex minus .2ex}{3ex plus .2ex}
+\usepackage{tabularx}
+    \captionsetup[table]{skip=0pt,singlelinecheck=off}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{tikz}
+    \usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, patterns, decorations.pathmorphing, fit}
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+\usepackage{hyperref}
+    \hypersetup{
+        hidelinks,
+        }
+    \urlstyle{same}
+
+\usepackage[toc, nonumberlist, nogroupskip, nopostdot]{glossaries}
+\usepackage{siunitx}
+    \sisetup{inter-unit-product = \ensuremath{{}\cdot{}}}
+
+\usepackage{float}
+\usepackage[style=numeric,sorting=none,url=false,maxbibnames=99]{biblatex}
+    \addbibresource{references.bib}
+
+\usepackage{chemformula}
+
+%--------------------------------------------------------------------------------------------------------------------
+%--------------------------------  creation of new functions + settings----------------------------------------------
+%--------------------------------------------------------------------------------------------------------------------
+\input{additionalFunctions.tex}
+
+
+%--------------------------------------------------------------------------------------------------------------------
+%--------------------------------  Document starting  ---------------------------------------------------------------
+%--------------------------------------------------------------------------------------------------------------------
+\makeglossaries
+\loadglsentries{acronyms.tex}
+\loadglsentries{symbols.tex}
+
+
+\begin{document}
+
+\input{chapters/00_titlepage.tex}
+
+\clearpage
+\chapter*{Abstract}
+\thispagestyle{empty}
+\input{chapters/00_abstract.tex}
+
+% Table of Contents
+\cleardoublepage
+\pagenumbering{roman}
+\tableofcontents
+\clearpage
+
+% List of Tables
+\phantomsection
+\listoftables
+\addcontentsline{toc}{chapter}{\listtablename}
+
+% List of Figures
+\phantomsection
+\listoffigures
+\addcontentsline{toc}{chapter}{\listfigurename}
+
+\printglossary[title={List of Abbreviations},type=\acronymtype, style=mystyle]
+\printglossary[type=symbolslist,style=symbunitlong]
+
+\chapter{Introduction}
+\pagenumbering{arabic}
+\input{chapters/01_introduction.tex}
+
+\chapter{Theoretical Background}
+\input{chapters/02_theory.tex}
+
+\chapter{System Architecture}
+\input{chapters/03_architecture.tex}
+
+\chapter{Component Specifications}
+\input{chapters/04_components.tex}
+
+\chapter{Safety and Certifications}
+\input{chapters/05_safety.tex}
+
+\chapter{Conclusions and Future Work}
+\input{chapters/06_conclusions.tex}
+
+\begingroup
+\setlength{\emergencystretch}{8em}
+\printbibliography[heading=bibintoc]
+\endgroup
+
+\appendix
+\chapter{Appendix: Reference Data}
+\input{chapters/appendixA.tex}
+
+\end{document}

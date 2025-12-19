@@ -1,0 +1,148 @@
+\section{Reference Vehicle Specifications}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Hydrogen fuel cell vehicle specifications (2024 models)}
+    \label{tab:fcev_specs}
+    \begin{tabular}{@{}lcccc@{}}
+        \toprule
+        \textbf{Vehicle} & \textbf{Tank Capacity} & \textbf{Pressure} & \textbf{Range} & \textbf{Fuel Economy} \\
+        \midrule
+        Toyota Mirai (2nd gen) & 5.6 kg & 700 bar & 650 km & 0.86 kg/100km \\
+        Hyundai Nexo & 6.3 kg & 700 bar & 666 km & 0.95 kg/100km \\
+        BMW iX5 Hydrogen & 6.0 kg & 700 bar & 504 km & 1.19 kg/100km \\
+        Honda CR-V e:FCEV & 4.3 kg & 700 bar & 435 km & 0.99 kg/100km \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Physical Constants}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Physical constants used in calculations}
+    \label{tab:constants}
+    \begin{tabular}{@{}llc@{}}
+        \toprule
+        \textbf{Constant} & \textbf{Symbol} & \textbf{Value} \\
+        \midrule
+        Faraday constant & $F$ & \SI{96485}{C/mol} \\
+        Universal gas constant & $R$ & \SI{8.314}{J/(mol.K)} \\
+        Molar mass of H$_2$ & $M_{H_2}$ & \SI{2.016}{g/mol} \\
+        Molar mass of H$_2$O & $M_{H_2O}$ & \SI{18.015}{g/mol} \\
+        Molar mass of O$_2$ & $M_{O_2}$ & \SI{32.00}{g/mol} \\
+        Standard temperature & $T_0$ & \SI{298.15}{K} \\
+        Standard pressure & $p_0$ & \SI{101325}{Pa} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Hydrogen Properties}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Selected properties of hydrogen}
+    \label{tab:h2_properties}
+    \begin{tabular}{@{}lc@{}}
+        \toprule
+        \textbf{Property} & \textbf{Value} \\
+        \midrule
+        Molecular formula & H$_2$ \\
+        Molecular weight & \SI{2.016}{g/mol} \\
+        Density at STP & \SI{0.0899}{kg/m^3} \\
+        Density at 700 bar, 25°C & $\sim$\SI{40}{kg/m^3} \\
+        Boiling point & \SI{20.3}{K} (\SI{-252.9}{\celsius}) \\
+        Critical temperature & \SI{33.2}{K} \\
+        Critical pressure & \SI{13.0}{bar} \\
+        Lower heating value (LHV) & \SI{120}{MJ/kg} = \SI{33.3}{kWh/kg} \\
+        Higher heating value (HHV) & \SI{142}{MJ/kg} = \SI{39.4}{kWh/kg} \\
+        Specific heat ratio $\gamma$ & 1.41 \\
+        Thermal conductivity & \SI{0.187}{W/(m.K)} at 300 K \\
+        Viscosity & \SI{8.9e-6}{Pa.s} at 300 K \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Energy Conversion Factors}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Energy conversion factors for hydrogen}
+    \label{tab:energy_conversion}
+    \begin{tabular}{@{}lc@{}}
+        \toprule
+        \textbf{Conversion} & \textbf{Value} \\
+        \midrule
+        1 kg H$_2$ (LHV) & \SI{33.3}{kWh} \\
+        1 kg H$_2$ (HHV) & \SI{39.4}{kWh} \\
+        1 Nm$^3$ H$_2$ & \SI{0.0899}{kg} \\
+        1 kg H$_2$ & \SI{11.1}{Nm^3} \\
+        1 kg H$_2$ at 700 bar & $\sim$\SI{25}{L} \\
+        1 L H$_2$ at 700 bar & $\sim$\SI{40}{g} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Compressibility Factor Data}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Compressibility factor $Z$ for hydrogen at \SI{25}{\celsius}}
+    \label{tab:compressibility_data}
+    \begin{tabular}{@{}cc@{}}
+        \toprule
+        \textbf{Pressure (bar)} & \textbf{Compressibility $Z$} \\
+        \midrule
+        1 & 1.000 \\
+        50 & 1.032 \\
+        100 & 1.065 \\
+        200 & 1.132 \\
+        350 & 1.240 \\
+        500 & 1.355 \\
+        700 & 1.520 \\
+        900 & 1.695 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Electrolyzer Energy Consumption}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Electrolyzer energy consumption at various cell voltages}
+    \label{tab:electrolyzer_energy}
+    \begin{tabular}{@{}ccc@{}}
+        \toprule
+        \textbf{Cell Voltage (V)} & \textbf{Energy (kWh/kg)} & \textbf{Efficiency (\%)} \\
+        \midrule
+        1.48 (thermoneutral) & 39.4 & 100 \\
+        1.60 & 42.6 & 92 \\
+        1.70 & 45.2 & 87 \\
+        1.80 & 47.9 & 82 \\
+        1.90 & 50.5 & 78 \\
+        2.00 & 53.2 & 74 \\
+        2.10 & 55.9 & 70 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{SAE J2601 Fueling Parameters}
+
+\begin{table}[htbp]
+    \centering
+    \caption{SAE J2601 H70 (700 bar) fueling parameters}
+    \label{tab:j2601}
+    \begin{tabular}{@{}lc@{}}
+        \toprule
+        \textbf{Parameter} & \textbf{Value} \\
+        \midrule
+        Nominal working pressure & \SI{700}{bar} \\
+        Maximum fueling pressure & \SI{875}{bar} \\
+        Target state of charge & 95--100\% \\
+        Maximum fuel temperature & \SI{85}{\celsius} \\
+        Minimum dispenser temperature (fast fill) & \SI{-40}{\celsius} \\
+        Non-communication fill time (typical) & 10--30 min \\
+        Communication fill time (typical) & 3--5 min \\
+        \bottomrule
+    \end{tabular}
+\end{table}

@@ -1,0 +1,464 @@
+This chapter presents the complete system architecture for the Hydrodomus home hydrogen generation system. The design philosophy emphasizes safety, modularity, and ease of installation while meeting the technical requirements established in Chapter 1.
+
+\section{System Overview}
+
+\subsection{Functional Description}
+
+The Hydrodomus system performs four primary functions:
+
+\begin{enumerate}
+    \item \textbf{Hydrogen generation}: Electrolyze water to produce hydrogen gas
+    \item \textbf{Gas separation and purification}: Separate hydrogen from oxygen and water vapor
+    \item \textbf{Compression}: Increase hydrogen pressure to \SI{700}{bar}
+    \item \textbf{Storage and dispensing}: Store compressed hydrogen and transfer to vehicle
+\end{enumerate}
+
+These functions are implemented through five interconnected subsystems, as shown in Figure~\ref{fig:system_block}.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[
+        node distance=1.8cm,
+        block/.style={rectangle, draw, thick, minimum width=2.2cm, minimum height=1.3cm, align=center, fill=blue!8, font=\small},
+        smallblock/.style={rectangle, draw, thick, minimum width=1.5cm, minimum height=0.8cm, align=center, fill=gray!10, font=\scriptsize},
+        arrow/.style={-{Stealth}, thick},
+        dashedarrow/.style={-{Stealth}, thick, dashed}
+    ]
+        % Input blocks
+        \node[smallblock] (water) {Water\\Supply};
+        \node[smallblock, below=0.8cm of water] (power) {Electricity\\Supply};
+
+        % Main blocks
+        \node[block, right=1.5cm of water, yshift=-0.5cm] (electro) {Electrolysis\\Unit};
+        \node[block, right=of electro] (sep) {Separation\\Unit};
+        \node[block, right=of sep] (comp) {Compression\\Unit};
+        \node[block, right=of comp] (storage) {Storage\\Unit};
+        \node[block, below=1.5cm of storage] (disp) {Dispensing\\Unit};
+
+        % Output
+        \node[smallblock, right=1.5cm of disp] (vehicle) {FCEV};
+
+        % Control system
+        \node[block, below=2cm of sep, fill=green!10] (control) {Control\\System};
+
+        % Vent
+        \node[smallblock, above=0.8cm of sep] (vent) {O$_2$ Vent};
+
+        % Arrows for main flow
+        \draw[arrow] (water) -| (electro);
+        \draw[arrow] (power) -| (electro);
+        \draw[arrow] (electro) -- node[above, font=\scriptsize] {H$_2$+O$_2$} (sep);
+        \draw[arrow] (sep) -- node[above, font=\scriptsize] {H$_2$} node[below, font=\scriptsize] {$\sim$1 bar} (comp);
+        \draw[arrow] (comp) -- node[above, font=\scriptsize] {H$_2$} node[below, font=\scriptsize] {700 bar} (storage);
+        \draw[arrow] (storage) -- (disp);
+        \draw[arrow] (disp) -- (vehicle);
+
+        % O2 vent
+        \draw[arrow, o2color] (sep) -- (vent);
+
+        % Control connections
+        \draw[dashedarrow, gray] (control) -- (electro);
+        \draw[dashedarrow, gray] (control) -- (sep);
+        \draw[dashedarrow, gray] (control) -- (comp);
+        \draw[dashedarrow, gray] (control) -- (storage);
+        \draw[dashedarrow, gray] (control) -- (disp);
+
+    \end{tikzpicture}
+    \caption{Hydrodomus system block diagram showing the five main subsystems and their interconnections. Solid arrows indicate gas flow; dashed arrows indicate control signals.}
+    \label{fig:system_block}
+\end{figure}
+
+\subsection{Design Philosophy}
+
+The system design follows several key principles:
+
+\textbf{Safety first}: All design decisions prioritize safety. The system includes multiple layers of protection against hydrogen release and operates fail-safe in all identified failure modes.
+
+\textbf{Modularity}: Each subsystem is designed as a replaceable module, enabling maintenance and future upgrades without complete system replacement.
+
+\textbf{Residential compatibility}: The system is designed for installation in a residential garage or utility space, with consideration for noise, footprint, and electrical requirements.
+
+\textbf{Autonomous operation}: Once started, the system operates automatically with minimal user intervention, similar to a home appliance.
+
+\section{Process Flow}
+
+\subsection{Normal Operation Sequence}
+
+The standard operating sequence proceeds as follows:
+
+\textbf{Phase 1: Startup}
+\begin{enumerate}
+    \item System performs self-check (sensor verification, leak detection)
+    \item Water level verified in reservoir
+    \item Electrical supply verified
+    \item Control system initializes all subsystems
+\end{enumerate}
+
+\textbf{Phase 2: Production}
+\begin{enumerate}
+    \item Electrolyzer powered up, reaching operating temperature
+    \item Water fed to electrolyzer at controlled rate
+    \item Hydrogen and oxygen produced at electrodes
+    \item Gases separated; oxygen vented safely
+    \item Hydrogen flows to low-pressure buffer
+\end{enumerate}
+
+\textbf{Phase 3: Compression}
+\begin{enumerate}
+    \item When buffer pressure reaches setpoint, compressor activates
+    \item Multi-stage compression to \SI{700}{bar}
+    \item Intercooling between stages
+    \item Compressed hydrogen flows to storage vessel
+\end{enumerate}
+
+\textbf{Phase 4: Standby}
+\begin{enumerate}
+    \item When storage reaches target pressure, production pauses
+    \item System enters low-power standby mode
+    \item Monitoring continues for safety parameters
+\end{enumerate}
+
+\textbf{Phase 5: Dispensing}
+\begin{enumerate}
+    \item User connects nozzle to vehicle
+    \item System verifies connection integrity
+    \item Controlled pressure release to vehicle tank
+    \item Flow terminated when vehicle tank full or user stops
+\end{enumerate}
+
+\subsection{Process and Instrumentation}
+
+Figure~\ref{fig:pid} presents the detailed process flow with instrumentation points.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[scale=0.75, transform shape,
+        tank/.style={rectangle, draw, thick, minimum width=1.2cm, minimum height=1.8cm},
+        valve/.style={diamond, draw, thick, minimum size=0.5cm, fill=white},
+        pump/.style={circle, draw, thick, minimum size=0.7cm},
+        sensor/.style={circle, draw, thick, minimum size=0.4cm, fill=yellow!30},
+        arrow/.style={-{Stealth}, thick}
+    ]
+        % Electrolyzer
+        \node[tank, fill=watercolor!20, minimum width=2cm, minimum height=2.5cm] (elec) at (0,0) {};
+        \node[font=\scriptsize] at (0,0) {Electrolyzer};
+
+        % Electrodes in electrolyzer
+        \draw[thick] (-0.5,-0.8) -- (-0.5,0.8);
+        \draw[thick] (0.5,-0.8) -- (0.5,0.8);
+        \node[font=\tiny] at (-0.5,1) {--};
+        \node[font=\tiny] at (0.5,1) {+};
+
+        % Water inlet
+        \draw[thick, watercolor] (-2,0) -- (-1.2,0);
+        \node[valve] (wv) at (-1.6,0) {};
+        \node[font=\tiny, above] at (-1.6,0.3) {WV};
+        \node[sensor] (wf) at (-2.3,0) {};
+        \node[font=\tiny, above] at (-2.3,0.3) {FT};
+
+        % Water tank
+        \node[tank, fill=watercolor!30] (wtank) at (-4,0) {};
+        \node[font=\tiny] at (-4,0) {H$_2$O};
+        \draw[thick, watercolor] (-3.4,0) -- (-2.5,0);
+
+        % Separator
+        \node[tank, fill=gray!10, minimum width=1.5cm] (sep) at (3,0) {};
+        \node[font=\scriptsize] at (3,0) {Sep.};
+
+        % H2 line from electrolyzer
+        \draw[thick, h2color] (0,1.5) -- (0,2) -- (2,2) -- (2,0.5) -- (2.25,0.5);
+        \node[sensor] (pt1) at (1,2) {};
+        \node[font=\tiny, above] at (1,2.2) {PT};
+
+        % O2 vent
+        \draw[thick, o2color] (3,1.2) -- (3,2.5);
+        \node[valve] (o2v) at (3,1.8) {};
+        \node[font=\tiny, right] at (3.3,1.8) {O$_2$ vent};
+
+        % Buffer tank
+        \node[tank, fill=h2color!15, minimum width=1.5cm, minimum height=2cm] (buffer) at (6,0) {};
+        \node[font=\scriptsize] at (6,0) {Buffer};
+        \draw[thick, h2color] (3.75,0) -- (5.25,0);
+        \node[sensor] (pt2) at (4.5,0) {};
+        \node[font=\tiny, above] at (4.5,0.2) {PT};
+
+        % Compressor (multi-stage)
+        \node[pump, fill=steelcolor!30, minimum size=1cm] (comp1) at (8,0) {};
+        \node[font=\tiny] at (8,0) {C1};
+        \draw[thick, h2color] (6.75,0) -- (7.5,0);
+
+        % Intercooler
+        \node[rectangle, draw, thick, minimum width=0.8cm, minimum height=0.6cm, fill=cyan!20] (ic) at (9.5,0) {};
+        \node[font=\tiny] at (9.5,0) {IC};
+        \draw[thick, h2color] (8.5,0) -- (9.1,0);
+
+        % Second stage
+        \node[pump, fill=steelcolor!30, minimum size=1cm] (comp2) at (11,0) {};
+        \node[font=\tiny] at (11,0) {C2};
+        \draw[thick, h2color] (9.9,0) -- (10.5,0);
+
+        % High pressure storage
+        \node[tank, fill=green!15, minimum width=1cm, minimum height=2.5cm, rounded corners=0.3cm] (hptank) at (13,0) {};
+        \node[font=\scriptsize, rotate=90] at (13,0) {700 bar};
+        \draw[thick, h2color!70!black] (11.5,0) -- (12.5,0);
+        \node[sensor] (pt3) at (12,0) {};
+        \node[font=\tiny, above] at (12,0.2) {PT};
+        \node[sensor] (tt) at (13,1.5) {};
+        \node[font=\tiny, right] at (13.2,1.5) {TT};
+
+        % Dispensing
+        \node[valve] (dv) at (13,-2) {};
+        \draw[thick, h2color!70!black] (13,-0.8) -- (13,-1.7);
+        \draw[thick, h2color!70!black] (13,-2.3) -- (13,-3);
+
+        % Nozzle
+        \draw[thick] (12.7,-3) -- (13.3,-3) -- (13.3,-3.5) -- (12.7,-3.5) -- cycle;
+        \node[font=\tiny] at (13,-3.25) {Nozzle};
+
+        % PRV
+        \node[valve, fill=red!20] (prv) at (14,0.5) {};
+        \draw[thick] (13.5,0.5) -- (prv);
+        \node[font=\tiny, right] at (14.3,0.5) {PRV};
+
+        % Legend
+        \node[font=\scriptsize] at (0,-3) {PT = Pressure Transmitter};
+        \node[font=\scriptsize] at (0,-3.5) {TT = Temperature Transmitter};
+        \node[font=\scriptsize] at (5,-3) {FT = Flow Transmitter};
+        \node[font=\scriptsize] at (5,-3.5) {PRV = Pressure Relief Valve};
+
+    \end{tikzpicture}
+    \caption{Process and instrumentation diagram (P\&ID) showing major equipment and instrumentation. Blue lines indicate hydrogen flow; equipment labeled with standard ISA symbols.}
+    \label{fig:pid}
+\end{figure}
+
+\section{Subsystem Descriptions}
+
+\subsection{Electrolysis Unit}
+
+The electrolysis unit generates hydrogen and oxygen from water using \gls{pem} technology.
+
+\textbf{Key specifications:}
+\begin{itemize}
+    \item Stack power: 1--2 kW nominal
+    \item Operating pressure: 1--5 bar (atmospheric to slightly elevated)
+    \item Operating temperature: 50--80\si{\celsius}
+    \item Water consumption: $\sim$\SI{1}{L/h} at full power
+    \item Hydrogen output: $\sim$\SI{20}{g/h} at full power
+\end{itemize}
+
+The electrolyzer includes:
+\begin{itemize}
+    \item \Gls{pem} stack with integrated cooling
+    \item Water circulation system with deionization
+    \item Power electronics (DC power supply)
+    \item Gas-liquid separators for each electrode
+\end{itemize}
+
+\subsection{Separation Unit}
+
+The separation unit ensures high-purity hydrogen by removing:
+\begin{itemize}
+    \item Residual oxygen (if any crossover through membrane)
+    \item Water vapor
+    \item Trace contaminants
+\end{itemize}
+
+For \gls{pem} electrolysis, the membrane provides inherent separation, so this unit primarily performs:
+\begin{itemize}
+    \item Water knockout (condensation)
+    \item Drying (desiccant or refrigerated)
+    \item Oxygen venting (with flame arrestor)
+\end{itemize}
+
+\subsection{Compression Unit}
+
+The compression unit increases hydrogen pressure from electrolyzer output ($\sim$1--5 bar) to storage pressure (\SI{700}{bar}).
+
+\textbf{Compression approach:}
+
+Multi-stage reciprocating (piston) compression is the only practical technology for achieving \SI{700}{bar} at the required flow rates. A typical configuration uses:
+
+\begin{itemize}
+    \item Stage 1: 1--5 bar $\rightarrow$ 30--50 bar
+    \item Stage 2: 30--50 bar $\rightarrow$ 200--250 bar
+    \item Stage 3: 200--250 bar $\rightarrow$ 700 bar
+\end{itemize}
+
+Intercoolers between stages prevent excessive temperature rise during compression. The hydrogen temperature must be controlled to prevent damage to downstream components and storage vessels.
+
+\textbf{Alternative technologies considered:}
+
+\begin{itemize}
+    \item \textbf{Ionic compressors}: Use ionic liquid as piston; lower maintenance but limited availability
+    \item \textbf{Metal hydride compressors}: Thermal cycling of hydrides; no moving parts but slow
+    \item \textbf{Electrochemical compression}: Integrated with electrolyzer; emerging technology
+\end{itemize}
+
+\subsection{Storage Unit}
+
+The storage unit holds compressed hydrogen until dispensing. Key requirements:
+
+\begin{itemize}
+    \item Vessel type: Type III or Type IV composite
+    \item Working pressure: \SI{700}{bar}
+    \item Volume: 10--50 L (depending on usage pattern)
+    \item Safety features: \gls{tprd}, pressure relief valve, burst disc
+\end{itemize}
+
+The storage vessel includes a valve assembly with:
+\begin{itemize}
+    \item Manual isolation valve
+    \item Solenoid-operated fill valve
+    \item Check valve (prevent backflow)
+    \item \Gls{tprd} for fire protection
+    \item Pressure transducer
+\end{itemize}
+
+\subsection{Dispensing Unit}
+
+The dispensing unit transfers hydrogen from storage to the vehicle. It must comply with SAE J2601 fueling protocols.
+
+\textbf{SAE J2601 requirements:}
+\begin{itemize}
+    \item Pre-cooling: Vehicle tanks require cooled hydrogen to prevent overheating during fast fill
+    \item Pressure ramp rate: Controlled to prevent thermal stress
+    \item Communication: Protocol for determining vehicle tank state
+    \item Nozzle standard: ISO 17268 Type B (\SI{700}{bar})
+\end{itemize}
+
+For home application, the ``slow fill'' protocol is appropriate:
+\begin{itemize}
+    \item Fill time: 10--30 minutes (vs. 3--5 minutes at stations)
+    \item No pre-cooling required
+    \item Simpler pressure management
+    \item Lower equipment cost
+\end{itemize}
+
+\section{Control System}
+
+\subsection{Control Architecture}
+
+The control system manages all subsystem operations through a hierarchical architecture:
+
+\textbf{Level 1 - Safety systems}: Hardwired safety interlocks that operate independently of software
+\begin{itemize}
+    \item Emergency stop circuits
+    \item Hydrogen detector alarms
+    \item Overpressure relief
+    \item Fire detection
+\end{itemize}
+
+\textbf{Level 2 - Process control}: PLC-based automation
+\begin{itemize}
+    \item Electrolyzer power management
+    \item Compressor sequencing
+    \item Pressure and temperature control
+    \item Fill protocol execution
+\end{itemize}
+
+\textbf{Level 3 - User interface}: Touch screen or app-based interface
+\begin{itemize}
+    \item System status display
+    \item Start/stop commands
+    \item Schedule programming
+    \item Maintenance alerts
+\end{itemize}
+
+\subsection{Operating Modes}
+
+\textbf{Production mode}: System actively generating and compressing hydrogen
+\begin{itemize}
+    \item Electrolyzer at set power level
+    \item Compressor cycling to maintain buffer pressure
+    \item Storage pressure increasing
+\end{itemize}
+
+\textbf{Standby mode}: Storage full, system idle
+\begin{itemize}
+    \item Electrolyzer off
+    \item Compressor off
+    \item Safety monitoring active
+    \item Ready for dispensing
+\end{itemize}
+
+\textbf{Dispensing mode}: Transferring hydrogen to vehicle
+\begin{itemize}
+    \item Production may continue simultaneously
+    \item Controlled pressure release
+    \item Fill protocol management
+\end{itemize}
+
+\textbf{Maintenance mode}: System isolated for service
+\begin{itemize}
+    \item All processes stopped
+    \item Valves in safe positions
+    \item Technician access enabled
+\end{itemize}
+
+\section{Original Concept Sketch}
+
+Figure~\ref{fig:original_sketch} shows the original concept sketch developed during the initial design phase, illustrating the basic system layout and component arrangement.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{schemalist.jpeg}
+    \caption{Original hand-drawn concept sketch showing the proposed system layout. The sketch illustrates the electrolysis tank with electrodes and separator, low-pressure buffer, compressor, high-pressure storage vessel, and connection to vehicle. Component list visible on right side.}
+    \label{fig:original_sketch}
+\end{figure}
+
+\section{Installation Considerations}
+
+\subsection{Space Requirements}
+
+The complete system is designed to fit within a residential garage or utility space:
+
+\begin{table}[htbp]
+    \centering
+    \caption{Estimated system dimensions and space requirements}
+    \label{tab:space_requirements}
+    \begin{tabular}{@{}lcc@{}}
+        \toprule
+        \textbf{Component} & \textbf{Dimensions (cm)} & \textbf{Floor Space (m$^2$)} \\
+        \midrule
+        Electrolyzer unit & 60 $\times$ 40 $\times$ 80 & 0.24 \\
+        Compressor unit & 80 $\times$ 60 $\times$ 100 & 0.48 \\
+        Storage vessel (10 L) & 20 dia $\times$ 80 & 0.04 \\
+        Control cabinet & 40 $\times$ 30 $\times$ 60 & 0.12 \\
+        \midrule
+        \textbf{Total footprint} & & $\sim$\textbf{1.5} \\
+        \textbf{Service clearance} & & $\sim$\textbf{1.0} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Utilities}
+
+\textbf{Electrical:}
+\begin{itemize}
+    \item Supply: 240 V single-phase or 400 V three-phase
+    \item Power: 3--5 kW peak, 2 kW average during production
+    \item Metering: Separate sub-meter recommended for energy tracking
+\end{itemize}
+
+\textbf{Water:}
+\begin{itemize}
+    \item Connection: Standard household supply
+    \item Quality: Tap water acceptable; internal treatment provides deionization
+    \item Consumption: $\sim$\SI{10}{L/day} at full production
+\end{itemize}
+
+\textbf{Ventilation:}
+\begin{itemize}
+    \item Requirement: Minimum 0.5 ACH (air changes per hour) when operating
+    \item Natural ventilation may be sufficient for well-ventilated garages
+    \item Forced ventilation recommended for enclosed spaces
+\end{itemize}
+
+\subsection{Environmental Conditions}
+
+\begin{itemize}
+    \item Operating temperature: 5--40\si{\celsius}
+    \item Storage temperature: --20--50\si{\celsius}
+    \item Humidity: 20--80\% RH (non-condensing)
+    \item Protection class: IP54 minimum for outdoor-rated components
+\end{itemize}

@@ -1,0 +1,550 @@
+This chapter presents the theoretical foundations necessary for understanding the design and operation of the Hydrodomus system. Starting from fundamental electrochemistry, we develop the principles governing water electrolysis, then proceed to the thermodynamics of gas compression and storage. These principles directly inform the engineering decisions presented in subsequent chapters.
+
+\section{Electrochemistry of Water Electrolysis}
+
+\subsection{Fundamental Principles}
+
+Water electrolysis is the process of using electrical energy to decompose water into its constituent elements, hydrogen and oxygen. This electrochemical reaction is the reverse of the hydrogen-oxygen fuel cell reaction and represents a well-understood industrial process with over 200 years of history.
+
+The overall reaction for water splitting is:
+\begin{equation}
+    \ch{2 H2O_{(l)} -> 2 H2_{(g)} + O2_{(g)}}
+    \label{eq:overall_electrolysis}
+\end{equation}
+
+This deceptively simple equation conceals significant thermodynamic and kinetic complexity. The reaction is highly endothermic---it requires energy input---and does not occur spontaneously at ambient conditions. The energy required comes from the electrical power supplied to the electrochemical cell.
+
+\paragraph{Why Water Splitting Requires Energy}
+
+The thermodynamic requirement for water splitting can be understood from the perspective of chemical bond energies. In water, each oxygen atom forms two strong covalent bonds with hydrogen atoms. Breaking these O--H bonds requires energy input. While new H--H and O=O bonds form in the products, the total bond energy of the products is less than that required to break the reactant bonds. This energy difference must be supplied externally.
+
+From a thermodynamic standpoint, the Gibbs free energy change for the reaction at standard conditions is:
+\begin{equation}
+    \Delta G^0 = +\SI{237.1}{kJ/mol}
+    \label{eq:gibbs_standard}
+\end{equation}
+
+The positive value indicates a non-spontaneous process---energy must be added to drive the reaction forward.
+
+\subsection{Electrode Reactions}
+
+The overall water splitting reaction occurs through two half-reactions at the electrodes of the electrolysis cell. The specific reactions depend on whether the system operates under acidic or alkaline conditions.
+
+\subsubsection{Acidic Conditions (PEM Electrolysis)}
+
+In \gls{pem} electrolysis, the membrane conducts protons (H\textsuperscript{+}) and the electrode reactions are:
+
+\textbf{Anode (Oxygen Evolution Reaction---OER):}
+\begin{equation}
+    \ch{2 H2O -> O2 + 4 H^+ + 4 e^-} \qquad E^0 = +\SI{1.229}{V}
+    \label{eq:oer_acidic}
+\end{equation}
+
+\textbf{Cathode (Hydrogen Evolution Reaction---HER):}
+\begin{equation}
+    \ch{4 H^+ + 4 e^- -> 2 H2} \qquad E^0 = \SI{0.000}{V}
+    \label{eq:her_acidic}
+\end{equation}
+
+At the anode, water molecules are oxidized, releasing oxygen gas, protons, and electrons. The protons migrate through the membrane to the cathode, while electrons flow through the external circuit. At the cathode, protons combine with electrons to form hydrogen gas.
+
+\subsubsection{Alkaline Conditions}
+
+In alkaline electrolysis, hydroxide ions (OH\textsuperscript{-}) are the mobile ionic species:
+
+\textbf{Cathode:}
+\begin{equation}
+    \ch{4 H2O + 4 e^- -> 2 H2 + 4 OH^-}
+    \label{eq:her_alkaline}
+\end{equation}
+
+\textbf{Anode:}
+\begin{equation}
+    \ch{4 OH^- -> O2 + 2 H2O + 4 e^-}
+    \label{eq:oer_alkaline}
+\end{equation}
+
+\paragraph{Physical Interpretation}
+
+The electrode reactions reveal why gas separation is inherent to the electrolysis process: hydrogen is produced exclusively at the cathode, while oxygen is produced exclusively at the anode. If the electrodes are physically separated (by a membrane or diaphragm), the gases remain separated and no additional purification is required. This is a fundamental advantage of electrolysis over thermal water splitting methods.
+
+\subsection{Thermodynamics of Electrolysis}
+
+\subsubsection{Minimum Voltage Requirement}
+
+The minimum voltage required to drive electrolysis is determined by the thermodynamics of the reaction. The reversible cell voltage $E_{rev}$ is related to the Gibbs free energy change by:
+\begin{equation}
+    E_{rev} = \frac{\Delta G}{nF}
+    \label{eq:reversible_voltage}
+\end{equation}
+
+where $n$ is the number of electrons transferred (4 for the overall reaction) and $F$ is the Faraday constant (\SI{96485}{C/mol}).
+
+At standard conditions:
+\begin{equation}
+    E_{rev}^0 = \frac{\SI{237100}{J/mol}}{4 \times \SI{96485}{C/mol}} = \SI{1.229}{V}
+    \label{eq:standard_voltage}
+\end{equation}
+
+This is the theoretical minimum voltage for water electrolysis at \SI{25}{\celsius} and \SI{1}{bar}.
+
+\subsubsection{Thermoneutral Voltage}
+
+In practice, the enthalpy change $\Delta H$ is more relevant than the Gibbs free energy because it accounts for the total energy required, including the entropy term. The thermoneutral voltage is:
+\begin{equation}
+    E_{tn} = \frac{\Delta H}{nF} = \frac{\SI{285800}{J/mol}}{4 \times \SI{96485}{C/mol}} = \SI{1.481}{V}
+    \label{eq:thermoneutral_voltage}
+\end{equation}
+
+At voltages below $E_{tn}$, the cell would absorb heat from the surroundings; above $E_{tn}$, the cell generates heat. Practical electrolyzers operate above the thermoneutral voltage due to various losses, meaning they always generate heat that must be managed.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[scale=0.9]
+        % Axes
+        \draw[thick, -{Stealth}] (0,0) -- (10,0) node[right] {Current Density};
+        \draw[thick, -{Stealth}] (0,0) -- (0,6) node[above] {Cell Voltage};
+
+        % Voltage levels
+        \draw[dashed, gray] (0,1.5) -- (9.5,1.5) node[right, font=\scriptsize] {$E_{rev}$ = \SI{1.23}{V}};
+        \draw[dashed, gray] (0,2.2) -- (9.5,2.2) node[right, font=\scriptsize] {$E_{tn}$ = \SI{1.48}{V}};
+
+        % Polarization curve
+        \draw[very thick, blue] (0,1.5) .. controls (1,2.5) and (3,3) .. (9,5);
+
+        % Regions
+        \draw[{Stealth}-, thick] (4,2.8) -- (4,1.5);
+        \node[font=\scriptsize, align=center] at (4,2.15) {Activation\\losses};
+
+        \draw[{Stealth}-, thick] (6,3.5) -- (6,2.8);
+        \node[font=\scriptsize, align=center] at (6,3.15) {Ohmic\\losses};
+
+        \draw[{Stealth}-, thick] (8,4.5) -- (8,3.8);
+        \node[font=\scriptsize, align=center] at (8,4.15) {Mass\\transport};
+
+        % Operating point
+        \fill[red] (5,3.2) circle (0.1);
+        \node[above right, red, font=\scriptsize] at (5,3.2) {Operating point};
+
+    \end{tikzpicture}
+    \caption{Polarization curve for a water electrolysis cell showing the relationship between cell voltage and current density. The gap between the reversible voltage $E_{rev}$ and the operating voltage represents efficiency losses from activation overpotentials, ohmic resistance, and mass transport limitations.}
+    \label{fig:polarization_curve}
+\end{figure}
+
+\subsubsection{Overpotentials and Efficiency Losses}
+
+Real electrolysis cells operate at voltages significantly higher than the reversible voltage due to various loss mechanisms:
+
+\textbf{Activation overpotential} ($\eta_{act}$): Energy required to overcome the activation barrier for the electrode reactions. The oxygen evolution reaction has particularly high activation overpotential due to its complex four-electron mechanism.
+
+\textbf{Ohmic overpotential} ($\eta_{\Omega}$): Resistive losses in the membrane/electrolyte, electrodes, and current collectors. This term increases linearly with current density according to Ohm's law:
+\begin{equation}
+    \eta_{\Omega} = i \cdot R_{cell}
+    \label{eq:ohmic_loss}
+\end{equation}
+
+\textbf{Mass transport overpotential} ($\eta_{mt}$): At high current densities, the supply of reactants or removal of products can become rate-limiting, causing additional voltage losses.
+
+The total cell voltage is:
+\begin{equation}
+    E_{cell} = E_{rev} + \eta_{act,a} + \eta_{act,c} + \eta_{\Omega} + \eta_{mt}
+    \label{eq:total_voltage}
+\end{equation}
+
+\subsubsection{Energy Efficiency}
+
+The voltage efficiency of an electrolyzer is defined as:
+\begin{equation}
+    \eta_V = \frac{E_{tn}}{E_{cell}}
+    \label{eq:voltage_efficiency}
+\end{equation}
+
+Using the thermoneutral voltage accounts for the total energy content of the hydrogen produced. Modern \gls{pem} electrolyzers achieve voltage efficiencies of 70--80\% at typical operating conditions.
+
+The specific energy consumption is often expressed as:
+\begin{equation}
+    E_s = \frac{E_{cell} \cdot n \cdot F}{M_{H_2}} = \frac{E_{cell} \times 2 \times 96485}{2.016 \times 3600} \approx 26.6 \times E_{cell} \quad [\si{kWh/kg}]
+    \label{eq:specific_energy}
+\end{equation}
+
+For a cell operating at \SI{1.8}{V}, the specific energy consumption is approximately \SI{48}{kWh/kg} of hydrogen.
+
+\subsection{Faraday's Laws of Electrolysis}
+
+Faraday's laws provide the quantitative relationship between electrical charge and the amount of substance produced:
+
+\textbf{First Law}: The mass of substance produced is proportional to the charge passed:
+\begin{equation}
+    m = \frac{Q \cdot M}{n \cdot F} = \frac{I \cdot t \cdot M}{n \cdot F}
+    \label{eq:faraday_first}
+\end{equation}
+
+For hydrogen production ($M = \SI{2.016}{g/mol}$, $n = 2$):
+\begin{equation}
+    m_{H_2} = \frac{I \cdot t \cdot 2.016}{2 \times 96485} = 1.044 \times 10^{-5} \cdot I \cdot t \quad [\si{g}]
+    \label{eq:hydrogen_production_rate}
+\end{equation}
+
+\paragraph{Practical Implications}
+
+Faraday's law has important practical implications for system design:
+
+\begin{itemize}
+    \item A \SI{1}{kW} electrolyzer operating at \SI{1.8}{V} draws approximately \SI{556}{A}
+    \item This produces hydrogen at a rate of \SI{20.9}{g/h} or approximately \SI{0.5}{kg/day}
+    \item The oxygen production rate is exactly half the molar rate of hydrogen (from stoichiometry)
+\end{itemize}
+
+\section{PEM Electrolysis Technology}
+
+\subsection{Operating Principle}
+
+\Gls{pem} electrolysis uses a solid polymer electrolyte---typically a perfluorosulfonic acid membrane such as Nafion---to conduct protons between the electrodes while providing gas separation. The technology was developed from \gls{pem} fuel cell research and offers several advantages for the Hydrodomus application.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[scale=0.85]
+        % Frame
+        \draw[thick] (0,0) rectangle (10,7);
+
+        % Membrane
+        \fill[yellow!40] (4.7,0.5) rectangle (5.3,6.5);
+        \node[rotate=90, font=\small\bfseries] at (5,3.5) {PEM};
+
+        % Anode side
+        \fill[steelcolor!50] (1,0.5) rectangle (2,6.5);
+        \node[rotate=90, font=\small] at (1.5,3.5) {Ti Plate};
+
+        \fill[black!60] (2,0.5) rectangle (2.3,6.5);
+        \node[rotate=90, font=\tiny, white] at (2.15,3.5) {PTL};
+
+        \fill[coppercolor!70] (2.3,0.5) rectangle (2.5,6.5);
+
+        \fill[black!80] (2.5,0.5) rectangle (2.7,6.5);
+        \node[rotate=90, font=\tiny, white] at (2.6,2) {Cat.};
+
+        % Water/O2 channel
+        \fill[watercolor!30] (2.7,0.5) rectangle (4.7,6.5);
+        \node[font=\small] at (3.7,5.5) {\ch{H2O}};
+
+        % O2 bubbles
+        \foreach \y in {2,3,4} {
+            \fill[o2color!50] (3.2,\y) circle (0.15);
+            \fill[o2color!50] (3.8,\y+0.3) circle (0.12);
+        }
+        \node[o2color, font=\small] at (3.7,1.5) {\ch{O2}};
+
+        % Cathode side
+        \fill[steelcolor!50] (8,0.5) rectangle (9,6.5);
+        \node[rotate=90, font=\small] at (8.5,3.5) {Ti Plate};
+
+        \fill[black!60] (7.7,0.5) rectangle (8,6.5);
+        \node[rotate=90, font=\tiny, white] at (7.85,3.5) {GDL};
+
+        \fill[black!80] (7.3,0.5) rectangle (7.5,6.5);
+        \node[rotate=90, font=\tiny, white] at (7.4,2) {Cat.};
+
+        % H2 channel
+        \fill[h2color!20] (5.3,0.5) rectangle (7.3,6.5);
+
+        % H2 bubbles
+        \foreach \y in {2,2.5,3,3.5,4,4.5,5} {
+            \fill[h2color!60] (6.2,\y) circle (0.1);
+            \fill[h2color!60] (6.6,\y+0.15) circle (0.08);
+        }
+        \node[h2color, font=\small] at (6.3,1.5) {\ch{H2}};
+
+        % Proton transport
+        \draw[-{Stealth}, very thick, red] (3.5,3.5) -- (4.7,3.5);
+        \draw[-{Stealth}, very thick, red] (5.3,3.5) -- (6.5,3.5);
+        \node[red, font=\scriptsize] at (4.1,3.9) {\ch{H+}};
+
+        % Electron flow
+        \draw[-{Stealth}, very thick, blue] (1.5,6.8) -- (1.5,7.3) -- (8.5,7.3) -- (8.5,6.8);
+        \node[blue, font=\scriptsize] at (5,7.6) {$e^-$};
+
+        % Labels
+        \node[font=\small\bfseries] at (1.5,-0.3) {Anode (+)};
+        \node[font=\small\bfseries] at (8.5,-0.3) {Cathode (--)};
+
+        % Power supply
+        \draw[thick] (4.5,7.3) rectangle (5.5,7.8);
+        \node[font=\scriptsize] at (5,7.55) {DC};
+
+    \end{tikzpicture}
+    \caption{Cross-sectional schematic of a \gls{pem} electrolysis cell. Water is fed to the anode where it is oxidized to oxygen and protons. Protons migrate through the membrane to the cathode where they combine with electrons to form hydrogen. The membrane provides inherent gas separation.}
+    \label{fig:pem_cell}
+\end{figure}
+
+\subsection{Membrane Electrode Assembly}
+
+The \gls{mea} is the core component of a \gls{pem} electrolyzer, consisting of:
+
+\textbf{Proton exchange membrane}: Typically Nafion (perfluorosulfonic acid), 50--200 \si{\micro m} thick. The membrane conducts protons with conductivity of 0.1--0.2 S/cm when hydrated, while being impermeable to gases and electrons.
+
+\textbf{Catalyst layers}: Platinum-based catalysts for the cathode (HER) and iridium oxide for the anode (OER). Catalyst loadings are typically 0.5--2 mg/cm\textsuperscript{2}. The high cost of iridium is a significant contributor to \gls{pem} electrolyzer cost.
+
+\textbf{Porous transport layers}: Gas diffusion layers (GDL) on the cathode side and porous transport layers (PTL) on the anode side facilitate reactant distribution and product removal.
+
+\subsection{Advantages for Home Application}
+
+\Gls{pem} technology offers several advantages that make it well-suited for the Hydrodomus application:
+
+\begin{enumerate}
+    \item \textbf{Compact design}: High current densities (1--3 A/cm\textsuperscript{2}) enable small footprint
+    \item \textbf{Solid electrolyte}: No liquid caustic chemicals requiring special handling
+    \item \textbf{Dynamic response}: Can follow variable power input (suitable for solar integration)
+    \item \textbf{High purity output}: Produces >99.99\% pure hydrogen directly
+    \item \textbf{Pressurized operation}: Some systems operate at elevated pressure, reducing compression requirements
+    \item \textbf{Low maintenance}: No electrolyte management required
+\end{enumerate}
+
+\subsection{Performance Characteristics}
+
+Typical performance parameters for commercial \gls{pem} electrolyzers:
+
+\begin{table}[htbp]
+    \centering
+    \caption{Typical performance parameters for \gls{pem} electrolyzers}
+    \label{tab:pem_performance}
+    \begin{tabular}{@{}lc@{}}
+        \toprule
+        \textbf{Parameter} & \textbf{Typical Value} \\
+        \midrule
+        Cell voltage & 1.7--2.0 V \\
+        Current density & 1--3 A/cm\textsuperscript{2} \\
+        Operating temperature & 50--80 \si{\celsius} \\
+        Operating pressure & 1--30 bar \\
+        Specific energy consumption & 50--55 kWh/kg H\textsubscript{2} \\
+        System efficiency (LHV) & 60--70\% \\
+        Hydrogen purity & >99.99\% \\
+        Lifetime & >60,000 hours \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Thermodynamics of Gas Compression}
+
+\subsection{Compression Work}
+
+Compressing hydrogen from electrolyzer output pressure to storage pressure requires mechanical work. The minimum work for isothermal compression of an ideal gas is:
+\begin{equation}
+    W_{iso} = nRT \ln\left(\frac{p_2}{p_1}\right)
+    \label{eq:isothermal_work}
+\end{equation}
+
+For compressing \SI{1}{kg} of hydrogen from \SI{1}{bar} to \SI{700}{bar} at \SI{298}{K}:
+\begin{equation}
+    W_{iso} = \frac{1000}{2.016} \times 8.314 \times 298 \times \ln(700) = \SI{8.07}{MJ} = \SI{2.24}{kWh}
+    \label{eq:compression_work_calc}
+\end{equation}
+
+\subsection{Real Gas Effects}
+
+At high pressures, hydrogen deviates significantly from ideal gas behavior. The compressibility factor $Z$ accounts for these deviations:
+\begin{equation}
+    pV = ZnRT
+    \label{eq:real_gas}
+\end{equation}
+
+For hydrogen at \SI{700}{bar} and \SI{25}{\celsius}, $Z \approx 1.5$, meaning the gas occupies 50\% more volume than predicted by the ideal gas law. This has important implications:
+
+\begin{itemize}
+    \item More compression work is required than the ideal gas calculation suggests
+    \item Storage capacity is less than ideal gas predictions
+    \item Density at \SI{700}{bar} is approximately \SI{40}{kg/m^3} rather than the ideal \SI{57}{kg/m^3}
+\end{itemize}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[scale=0.8]
+        % Axes
+        \draw[thick, -{Stealth}] (0,0) -- (10,0) node[right] {Pressure (bar)};
+        \draw[thick, -{Stealth}] (0,0) -- (0,6) node[above] {Compressibility $Z$};
+
+        % Tick marks
+        \foreach \x/\label in {0/0, 2/200, 4/400, 6/600, 8/800, 10/1000} {
+            \draw (\x,0) -- (\x,-0.1) node[below, font=\scriptsize] {\label};
+        }
+        \foreach \y/\label in {1/1.0, 2/1.2, 3/1.4, 4/1.6, 5/1.8} {
+            \draw (0,\y) -- (-0.1,\y) node[left, font=\scriptsize] {\label};
+        }
+
+        % Z = 1 reference
+        \draw[dashed, gray] (0,1) -- (10,1);
+        \node[gray, font=\scriptsize] at (9,0.7) {Ideal gas};
+
+        % Compressibility curve (approximate)
+        \draw[very thick, blue] (0,1) .. controls (2,1.2) and (4,2) .. (7,3.5) .. controls (8,4) .. (10,4.8);
+
+        % 700 bar point
+        \fill[red] (7,3.5) circle (0.1);
+        \draw[dashed, red] (7,0) -- (7,3.5) -- (0,3.5);
+        \node[red, font=\scriptsize, above right] at (7,3.5) {$Z \approx 1.5$ at 700 bar};
+
+    \end{tikzpicture}
+    \caption{Compressibility factor $Z$ for hydrogen as a function of pressure at \SI{25}{\celsius}. At \SI{700}{bar}, hydrogen deviates significantly from ideal gas behavior with $Z \approx 1.5$.}
+    \label{fig:compressibility}
+\end{figure}
+
+\subsection{Compression Efficiency}
+
+Real compressors operate closer to adiabatic than isothermal conditions, especially at high compression ratios. For multi-stage adiabatic compression with intercooling:
+\begin{equation}
+    W_{adi} = \frac{\gamma}{\gamma-1} \cdot nRT_1 \cdot N \left[\left(\frac{p_2}{p_1}\right)^{\frac{\gamma-1}{N\gamma}} - 1\right]
+    \label{eq:adiabatic_work}
+\end{equation}
+
+where $N$ is the number of compression stages and $\gamma = 1.41$ for hydrogen.
+
+Including mechanical inefficiencies, practical compression energy is typically 3--5 kWh/kg for compression from \SI{30}{bar} to \SI{700}{bar}.
+
+\section{Hydrogen Storage}
+
+\subsection{Storage Methods Overview}
+
+Hydrogen can be stored in several forms:
+
+\begin{itemize}
+    \item \textbf{Compressed gas}: Most mature technology, used in vehicles
+    \item \textbf{Liquid hydrogen}: Higher density but requires cryogenic temperatures (\SI{20}{K})
+    \item \textbf{Metal hydrides}: Solid-state storage with high volumetric density but heavy
+    \item \textbf{Chemical carriers}: Ammonia, methanol, or liquid organic hydrogen carriers
+\end{itemize}
+
+For the Hydrodomus application, compressed gas storage at \SI{700}{bar} is the appropriate choice as it matches the automotive standard.
+
+\subsection{Compressed Gas Storage}
+
+\subsubsection{Pressure-Volume Relationship}
+
+The amount of hydrogen stored in a vessel depends on pressure, temperature, and vessel volume. Using the real gas equation:
+\begin{equation}
+    m = \frac{pVM}{ZRT}
+    \label{eq:stored_mass}
+\end{equation}
+
+For a \SI{10}{L} vessel at \SI{700}{bar} and \SI{25}{\celsius}:
+\begin{equation}
+    m = \frac{700 \times 10^5 \times 0.01 \times 2.016 \times 10^{-3}}{1.5 \times 8.314 \times 298} = \SI{0.38}{kg}
+    \label{eq:stored_mass_calc}
+\end{equation}
+
+This represents approximately 7\% of a Toyota Mirai's full tank capacity (\SI{5.6}{kg}).
+
+\subsubsection{Storage Vessel Types}
+
+High-pressure hydrogen vessels are classified into four types:
+
+\begin{table}[htbp]
+    \centering
+    \caption{Hydrogen storage vessel classification}
+    \label{tab:vessel_types}
+    \begin{tabular}{@{}clcc@{}}
+        \toprule
+        \textbf{Type} & \textbf{Construction} & \textbf{Max Pressure} & \textbf{Application} \\
+        \midrule
+        I & All-metal (steel) & 200--300 bar & Industrial \\
+        II & Metal liner + composite hoop wrap & 300--450 bar & Industrial \\
+        III & Metal liner + full composite wrap & 350--700 bar & Vehicles, stationary \\
+        IV & Polymer liner + full composite wrap & 700 bar & Vehicles \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Type IV vessels, using a high-density polyethylene (HDPE) liner with carbon fiber reinforced polymer (CFRP) overwrap, are standard for \SI{700}{bar} automotive applications. These vessels are designed to fail safely through controlled leakage rather than catastrophic rupture.
+
+\subsection{Safety Considerations}
+
+\subsubsection{Physical Properties of Hydrogen}
+
+Understanding hydrogen's physical properties is essential for safe system design:
+
+\begin{table}[htbp]
+    \centering
+    \caption{Physical and safety properties of hydrogen compared to other fuels}
+    \label{tab:hydrogen_properties}
+    \begin{tabular}{@{}lccc@{}}
+        \toprule
+        \textbf{Property} & \textbf{Hydrogen} & \textbf{Methane} & \textbf{Gasoline} \\
+        \midrule
+        Density at STP (kg/m\textsuperscript{3}) & 0.0899 & 0.717 & 720--780 \\
+        \Gls{lel} (vol\%) & 4.0 & 5.0 & 1.0 \\
+        \Gls{uel} (vol\%) & 75 & 15 & 7.6 \\
+        Auto-ignition temp. (\si{\celsius}) & 585 & 540 & 230--480 \\
+        Min. ignition energy (mJ) & 0.02 & 0.29 & 0.24 \\
+        Flame velocity (m/s) & 2.65 & 0.37 & 0.37 \\
+        Diffusion coeff. in air (cm\textsuperscript{2}/s) & 0.61 & 0.16 & 0.05 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\paragraph{Implications for Safety Design}
+
+Several properties have important safety implications:
+
+\begin{itemize}
+    \item \textbf{Wide flammability range}: Hydrogen can ignite over a broad range of concentrations, but this also means it disperses to below flammable concentrations more readily than other fuels
+    \item \textbf{Low ignition energy}: Eliminates static discharge as a potential ignition source requirement
+    \item \textbf{High diffusivity}: Hydrogen disperses rapidly in open environments, reducing accumulation risk
+    \item \textbf{Buoyancy}: Being 14 times lighter than air, hydrogen rises rapidly, making outdoor releases relatively safe
+    \item \textbf{No toxicity}: Unlike carbon monoxide, hydrogen is non-toxic; the primary hazard is asphyxiation in confined spaces
+\end{itemize}
+
+\subsubsection{Deflagration vs. Detonation}
+
+A critical safety distinction exists between deflagration (subsonic flame propagation) and detonation (supersonic). Hydrogen-air mixtures can detonate under specific conditions, but detonation requires:
+
+\begin{itemize}
+    \item Concentration near stoichiometric (29\%)
+    \item Confinement
+    \item Strong ignition source or long flame path
+\end{itemize}
+
+In open or well-ventilated environments, hydrogen fires typically deflagrate rather than detonate, producing less destructive overpressure.
+
+\section{Energy Balance}
+
+\subsection{System Efficiency}
+
+The overall efficiency of the Hydrodomus system can be expressed as:
+\begin{equation}
+    \eta_{system} = \eta_{electrolyzer} \times \eta_{compression} \times \eta_{storage}
+    \label{eq:system_efficiency}
+\end{equation}
+
+With typical values:
+\begin{itemize}
+    \item $\eta_{electrolyzer} = 70\%$ (based on LHV)
+    \item $\eta_{compression} = 90\%$ (mechanical efficiency)
+    \item $\eta_{storage} = 98\%$ (accounting for minor leakage)
+\end{itemize}
+
+The overall system efficiency is approximately 62\%.
+
+\subsection{Energy Requirements}
+
+For producing \SI{1}{kg} of hydrogen at \SI{700}{bar}:
+
+\begin{table}[htbp]
+    \centering
+    \caption{Energy breakdown for producing \SI{1}{kg} of stored hydrogen}
+    \label{tab:energy_breakdown}
+    \begin{tabular}{@{}lc@{}}
+        \toprule
+        \textbf{Process} & \textbf{Energy (kWh/kg)} \\
+        \midrule
+        Electrolysis (at 70\% efficiency) & 47.6 \\
+        Compression (30 bar $\rightarrow$ 700 bar) & 3--5 \\
+        Balance of plant & 1--2 \\
+        \midrule
+        \textbf{Total} & \textbf{52--55} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+The \gls{lhv} of hydrogen is \SI{33.3}{kWh/kg}, so the electricity-to-hydrogen efficiency is:
+\begin{equation}
+    \eta = \frac{33.3}{54} \approx 62\%
+    \label{eq:overall_efficiency}
+\end{equation}

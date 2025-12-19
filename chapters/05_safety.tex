@@ -1,0 +1,402 @@
+This chapter addresses the safety considerations and regulatory requirements for deploying a hydrogen generation system in a residential environment. The certification pathway for commercial deployment is outlined, with reference to applicable international standards.
+
+\section{Hazard Analysis}
+
+\subsection{Hazard Identification}
+
+A systematic hazard identification for the Hydrodomus system reveals the following primary hazards:
+
+\begin{table}[htbp]
+    \centering
+    \caption{Primary hazards and consequences}
+    \label{tab:hazards}
+    \begin{tabular}{@{}lll@{}}
+        \toprule
+        \textbf{Hazard} & \textbf{Cause} & \textbf{Potential Consequence} \\
+        \midrule
+        Hydrogen release & Leak, rupture, seal failure & Fire, explosion, asphyxiation \\
+        High pressure & Vessel failure, hose rupture & Projectile hazard, jet release \\
+        Electrical & Short circuit, insulation failure & Shock, fire, ignition source \\
+        Oxygen enrichment & O$_2$ accumulation & Enhanced combustion \\
+        Chemical & Water treatment chemicals & Skin/eye irritation \\
+        Mechanical & Moving parts (compressor) & Injury during maintenance \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Risk Assessment}
+
+Using a standard risk matrix approach, each hazard is evaluated for likelihood and consequence severity:
+
+\begin{table}[htbp]
+    \centering
+    \caption{Risk assessment summary}
+    \label{tab:risk_assessment}
+    \begin{tabular}{@{}lcccc@{}}
+        \toprule
+        \textbf{Hazard} & \textbf{Likelihood} & \textbf{Severity} & \textbf{Risk Level} & \textbf{Mitigation} \\
+        \midrule
+        H$_2$ leak (minor) & Possible & Moderate & Medium & Detection, ventilation \\
+        H$_2$ release (major) & Unlikely & Severe & Medium & Vessel certification \\
+        Vessel rupture & Rare & Critical & Medium & Design standards \\
+        Fire & Unlikely & Severe & Medium & Detection, suppression \\
+        Electrical shock & Unlikely & Moderate & Low & Grounding, insulation \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Safety Design Features}
+
+\subsection{Inherent Safety}
+
+The system design incorporates inherent safety principles:
+
+\textbf{Minimize}: Keep hydrogen inventory as low as practical
+\begin{itemize}
+    \item Small storage vessel (\SI{10}{L}) vs. station-scale (\SI{1000}{L}+)
+    \item Minimal piping and dead volumes
+    \item Production rate matched to consumption
+\end{itemize}
+
+\textbf{Substitute}: Use less hazardous alternatives where possible
+\begin{itemize}
+    \item \Gls{pem} electrolysis (no caustic electrolyte) vs. alkaline
+    \item Low-pressure electrolyzer operation
+\end{itemize}
+
+\textbf{Moderate}: Reduce severity of potential incidents
+\begin{itemize}
+    \item Outdoor or well-ventilated installation
+    \item Small orifices limit release rate
+    \item Flame arrestors prevent flashback
+\end{itemize}
+
+\textbf{Simplify}: Reduce complexity and failure modes
+\begin{itemize}
+    \item Minimal number of fittings
+    \item Welded connections preferred over threaded
+    \item Fail-safe valve positions
+\end{itemize}
+
+\subsection{Layers of Protection}
+
+The system implements multiple independent protection layers:
+
+\textbf{Layer 1: Process design}
+\begin{itemize}
+    \item Design pressure margins (1.5$\times$ working pressure test)
+    \item Material selection for hydrogen compatibility
+    \item Leak-tight construction
+\end{itemize}
+
+\textbf{Layer 2: Basic process control}
+\begin{itemize}
+    \item Automatic shutdown on process limits
+    \item Pressure control loops
+    \item Temperature monitoring
+\end{itemize}
+
+\textbf{Layer 3: Safety instrumented systems}
+\begin{itemize}
+    \item Independent safety PLC
+    \item Redundant sensors for critical measurements
+    \item Automatic emergency shutdown
+\end{itemize}
+
+\textbf{Layer 4: Physical protection}
+\begin{itemize}
+    \item Pressure relief valves
+    \item Burst discs
+    \item \Gls{tprd}
+\end{itemize}
+
+\textbf{Layer 5: Emergency response}
+\begin{itemize}
+    \item Manual emergency stop
+    \item Hydrogen detection and alarm
+    \item Fire detection and notification
+\end{itemize}
+
+\subsection{Hydrogen Detection System}
+
+Hydrogen detection is critical because hydrogen is odorless, colorless, and has a wide flammability range.
+
+\textbf{Sensor placement:}
+\begin{itemize}
+    \item At ceiling level (hydrogen rises)
+    \item Near each potential leak source
+    \item At ventilation exhaust points
+    \item Near storage vessel valve assembly
+\end{itemize}
+
+\textbf{Alarm logic:}
+\begin{itemize}
+    \item Warning alarm at 10\% \gls{lel} (0.4\% H$_2$)
+    \item Automatic shutdown at 25\% \gls{lel} (1\% H$_2$)
+    \item Sensor fault alarm on signal loss
+\end{itemize}
+
+\subsection{Ventilation Requirements}
+
+Adequate ventilation prevents hydrogen accumulation in case of a release:
+
+\begin{equation}
+    Q_{vent} \geq \frac{\dot{V}_{H_2,max}}{0.01} \times SF
+\end{equation}
+
+where $\dot{V}_{H_2,max}$ is the maximum potential release rate and $SF$ is a safety factor (typically 2--4).
+
+For the Hydrodomus system with maximum production of \SI{0.5}{Nm^3/h}:
+\begin{equation}
+    Q_{vent} \geq \frac{0.5}{0.01} \times 2 = \SI{100}{m^3/h}
+\end{equation}
+
+This is easily achieved with natural ventilation in a standard garage or with a small exhaust fan.
+
+\subsection{Fire Protection}
+
+\textbf{Fire prevention:}
+\begin{itemize}
+    \item Elimination of ignition sources in classified areas
+    \item Grounding and bonding of all metallic components
+    \item Non-sparking materials and tools
+    \item ATEX-rated equipment where required
+\end{itemize}
+
+\textbf{Fire detection:}
+\begin{itemize}
+    \item UV/IR flame detectors for hydrogen fires (hydrogen flames are nearly invisible)
+    \item Heat detectors as backup
+    \item Integration with building fire alarm if applicable
+\end{itemize}
+
+\textbf{Fire response:}
+\begin{itemize}
+    \item Automatic shutdown of hydrogen production
+    \item Closure of isolation valves
+    \item Notification to user/monitoring service
+    \item \Gls{tprd} prevents vessel rupture in fire
+\end{itemize}
+
+\section{Applicable Standards}
+
+\subsection{International Standards}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Key standards for hydrogen systems}
+    \label{tab:standards}
+    \begin{tabular}{@{}lp{8cm}@{}}
+        \toprule
+        \textbf{Standard} & \textbf{Scope} \\
+        \midrule
+        ISO 19880-1 & Gaseous hydrogen fueling stations---General requirements \\
+        ISO 19880-3 & Valves \\
+        ISO 19880-5 & Hoses and hose assemblies \\
+        ISO 19880-8 & Fuel quality control \\
+        ISO 17268 & Refueling connection devices \\
+        ISO 22734 & Hydrogen generators using water electrolysis \\
+        ISO 16111 & Transportable gas storage devices \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{European Regulations}
+
+\begin{table}[htbp]
+    \centering
+    \caption{European regulatory requirements}
+    \label{tab:eu_regs}
+    \begin{tabular}{@{}lp{8cm}@{}}
+        \toprule
+        \textbf{Regulation} & \textbf{Scope} \\
+        \midrule
+        EC 79/2009 & Type-approval of hydrogen-powered motor vehicles \\
+        EC 406/2010 & Hydrogen components and systems \\
+        ATEX 2014/34/EU & Equipment for potentially explosive atmospheres \\
+        PED 2014/68/EU & Pressure Equipment Directive \\
+        LVD 2014/35/EU & Low Voltage Directive (electrical safety) \\
+        EMC 2014/30/EU & Electromagnetic Compatibility \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{SAE Standards}
+
+\begin{table}[htbp]
+    \centering
+    \caption{SAE standards for hydrogen fueling}
+    \label{tab:sae_standards}
+    \begin{tabular}{@{}lp{8cm}@{}}
+        \toprule
+        \textbf{Standard} & \textbf{Scope} \\
+        \midrule
+        SAE J2601 & Fueling protocols for light duty gaseous hydrogen vehicles \\
+        SAE J2799 & Hydrogen surface vehicle to station communications \\
+        SAE J2600 & Compressed hydrogen surface vehicle fueling connection \\
+        SAE J2579 & Standard for fuel systems in fuel cell and other hydrogen vehicles \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Certification Pathway}
+
+\subsection{Component Certification}
+
+Individual components must be certified before system integration:
+
+\textbf{Pressure vessels:}
+\begin{itemize}
+    \item Certification to ISO 11119-3 (composite cylinders) or EC 79/406
+    \item Type approval testing including burst, cycling, environmental exposure
+    \item Periodic inspection requirements (typically 3--5 years)
+\end{itemize}
+
+\textbf{Electrolyzer:}
+\begin{itemize}
+    \item CE marking for European market
+    \item ISO 22734 compliance
+    \item Electrical safety (LVD) and EMC compliance
+\end{itemize}
+
+\textbf{Compressor:}
+\begin{itemize}
+    \item PED compliance for pressure equipment
+    \item ATEX certification if located in hazardous area
+    \item Machinery Directive compliance
+\end{itemize}
+
+\subsection{System Certification}
+
+The integrated system requires additional certification:
+
+\textbf{Hazardous area classification:}
+\begin{itemize}
+    \item Define Zone 1/Zone 2 areas around hydrogen equipment
+    \item Ensure all equipment in classified areas has appropriate rating
+    \item Document in installation drawing
+\end{itemize}
+
+\textbf{Functional safety:}
+\begin{itemize}
+    \item Safety Integrity Level (SIL) assessment
+    \item Safety instrumented function design
+    \item Proof testing requirements
+\end{itemize}
+
+\textbf{Installation approval:}
+\begin{itemize}
+    \item Building permit requirements vary by jurisdiction
+    \item Fire department notification/approval
+    \item Insurance requirements
+\end{itemize}
+
+\subsection{Certification Bodies}
+
+Relevant notified bodies and certification organizations include:
+
+\begin{itemize}
+    \item TÜV (Germany)---Pressure equipment, ATEX, functional safety
+    \item DNV GL---Hydrogen systems, risk assessment
+    \item Bureau Veritas---Product certification
+    \item UL (United States)---Electrical safety, hydrogen equipment
+\end{itemize}
+
+\section{Installation Requirements}
+
+\subsection{Location Selection}
+
+Preferred installation locations:
+
+\begin{itemize}
+    \item \textbf{Outdoor}: Ideal for natural ventilation; weather protection required
+    \item \textbf{Garage}: Common residential option; requires ventilation assessment
+    \item \textbf{Utility room}: Acceptable if well-ventilated
+    \item \textbf{Basement}: Generally not recommended due to ventilation challenges
+\end{itemize}
+
+\subsection{Separation Distances}
+
+Minimum separation distances from ignition sources and building features:
+
+\begin{table}[htbp]
+    \centering
+    \caption{Recommended separation distances}
+    \label{tab:separation}
+    \begin{tabular}{@{}lc@{}}
+        \toprule
+        \textbf{Feature} & \textbf{Distance (m)} \\
+        \midrule
+        Building openings (windows, doors) & 3 \\
+        Air intakes (HVAC) & 5 \\
+        Lot line / public way & 3 \\
+        Other flammable storage & 3 \\
+        Electrical panels (non-rated) & 1.5 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Electrical Classification}
+
+The area around hydrogen equipment is classified per IEC 60079-10-1:
+
+\begin{itemize}
+    \item \textbf{Zone 1}: Within 0.5 m of potential leak sources (valves, fittings)
+    \item \textbf{Zone 2}: 0.5--2 m from Zone 1 boundary, or entire enclosed space
+    \item \textbf{Non-hazardous}: Outdoors with adequate ventilation, beyond Zone 2
+\end{itemize}
+
+All electrical equipment within classified zones must have appropriate \gls{atex} rating.
+
+\section{Operational Safety}
+
+\subsection{User Training}
+
+System users should receive training covering:
+
+\begin{itemize}
+    \item Normal operation procedures
+    \item Emergency shutdown procedures
+    \item Hydrogen safety awareness
+    \item Basic maintenance tasks
+    \item When to call for professional service
+\end{itemize}
+
+\subsection{Maintenance Requirements}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Maintenance schedule}
+    \label{tab:maintenance}
+    \begin{tabular}{@{}lcc@{}}
+        \toprule
+        \textbf{Task} & \textbf{Interval} & \textbf{Performed By} \\
+        \midrule
+        Visual inspection & Monthly & User \\
+        Water system check & Monthly & User \\
+        Sensor calibration & 6 months & Technician \\
+        Leak check & Annually & Technician \\
+        Vessel inspection & 3--5 years & Certified inspector \\
+        Stack replacement & 10+ years & Manufacturer \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Emergency Procedures}
+
+\textbf{Hydrogen leak detected:}
+\begin{enumerate}
+    \item Do not create sparks or flames
+    \item Press emergency stop if safe to do so
+    \item Evacuate area
+    \item Call emergency services if leak continues
+    \item Do not re-enter until cleared
+\end{enumerate}
+
+\textbf{Fire:}
+\begin{enumerate}
+    \item Evacuate immediately
+    \item Call emergency services
+    \item Do not attempt to extinguish hydrogen fire (let it burn out)
+    \item Inform responders of hydrogen presence
+\end{enumerate}

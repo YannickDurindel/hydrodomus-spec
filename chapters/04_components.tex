@@ -1,0 +1,386 @@
+This chapter provides detailed specifications for the major components of the Hydrodomus system. For each component, design requirements are established based on the system architecture, and commercially available solutions are identified where possible.
+
+\section{Component Overview}
+
+Table~\ref{tab:component_summary} summarizes the major components derived from the original concept sketch and engineering analysis.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Summary of major system components}
+    \label{tab:component_summary}
+    \begin{tabular}{@{}clp{6cm}@{}}
+        \toprule
+        \textbf{No.} & \textbf{Component} & \textbf{Function} \\
+        \midrule
+        1 & Electrolysis tank (Cuve) & Water container and electrochemical cell \\
+        2 & Electrodes & Anode and cathode for water splitting \\
+        3 & Separator membrane & Gas separation between H$_2$ and O$_2$ \\
+        4 & Electrolyte/Water & Reactant and ionic conductor \\
+        5 & Low-pressure tubing & Gas transport at low pressure \\
+        6 & Low-pressure reservoir & Buffer storage before compression \\
+        7 & High-pressure compressor & Compression to \SI{700}{bar} \\
+        8 & Storage vessel & High-pressure hydrogen storage \\
+        9 & Dispensing nozzle & Vehicle connection interface \\
+        10 & Control system & System automation and safety \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Electrolysis Stack}
+
+\subsection{Requirements}
+
+The electrolyzer must meet the following requirements:
+
+\begin{table}[htbp]
+    \centering
+    \caption{Electrolyzer requirements}
+    \label{tab:electrolyzer_req}
+    \begin{tabular}{@{}lcc@{}}
+        \toprule
+        \textbf{Parameter} & \textbf{Minimum} & \textbf{Target} \\
+        \midrule
+        Production rate & 0.3 kg/day & 0.5 kg/day \\
+        Electrical power & 1.5 kW & 2.0 kW \\
+        Efficiency (LHV basis) & 60\% & 70\% \\
+        Output pressure & 1 bar & 5--30 bar \\
+        Hydrogen purity & 99.9\% & 99.99\% \\
+        Lifetime & 40,000 h & 60,000 h \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Technology Selection}
+
+\Gls{pem} electrolysis is selected over alkaline electrolysis for the following reasons:
+
+\begin{enumerate}
+    \item \textbf{No liquid electrolyte}: Eliminates handling of caustic KOH solution
+    \item \textbf{Compact footprint}: Higher current density enables smaller stack
+    \item \textbf{Dynamic response}: Suitable for variable renewable input
+    \item \textbf{High purity output}: No electrolyte contamination
+    \item \textbf{Elevated pressure operation}: Some stacks operate at 30+ bar, reducing compression
+\end{enumerate}
+
+\subsection{Commercial Options}
+
+Several manufacturers offer \gls{pem} electrolyzer stacks in the target power range:
+
+\begin{table}[htbp]
+    \centering
+    \caption{Representative commercial \gls{pem} electrolyzer options}
+    \label{tab:electrolyzer_options}
+    \begin{tabular}{@{}lcccc@{}}
+        \toprule
+        \textbf{Manufacturer} & \textbf{Model} & \textbf{Power} & \textbf{Output} & \textbf{Pressure} \\
+        \midrule
+        Nel & M Series & 1--2 kW & 0.4 Nm$^3$/h & 30 bar \\
+        ITM Power & HGAS & 0.5--2 kW & 0.5 Nm$^3$/h & 15 bar \\
+        Enapter & EL 2.1 & 2.4 kW & 0.5 Nm$^3$/h & 35 bar \\
+        H-TEC Systems & ME100 & 1 kW & 0.22 Nm$^3$/h & 30 bar \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Stack Configuration}
+
+A typical \gls{pem} stack for the Hydrodomus application consists of:
+
+\begin{itemize}
+    \item \textbf{Active area}: 50--100 cm$^2$ per cell
+    \item \textbf{Number of cells}: 10--20 cells in series
+    \item \textbf{Cell voltage}: 1.7--2.0 V
+    \item \textbf{Stack voltage}: 17--40 V DC
+    \item \textbf{Current}: 50--100 A
+\end{itemize}
+
+\section{Power Electronics}
+
+\subsection{DC Power Supply}
+
+The electrolyzer requires a regulated DC power supply with the following characteristics:
+
+\begin{itemize}
+    \item Input: 230 V AC single-phase or 400 V AC three-phase
+    \item Output: 0--50 V DC, 0--100 A
+    \item Regulation: $\pm$1\% voltage, $\pm$2\% current
+    \item Efficiency: >92\%
+    \item Control interface: 0--10 V or 4--20 mA analog, or digital (Modbus/CAN)
+\end{itemize}
+
+\subsection{Grid Integration}
+
+For solar integration, the power supply should accommodate:
+
+\begin{itemize}
+    \item Variable input power tracking
+    \item Maximum power point tracking (MPPT) integration
+    \item Grid/solar switching logic
+    \item Battery backup option for overnight operation
+\end{itemize}
+
+\section{Water System}
+
+\subsection{Water Quality Requirements}
+
+\Gls{pem} electrolyzers require high-purity water to prevent membrane degradation:
+
+\begin{table}[htbp]
+    \centering
+    \caption{Water quality requirements for \gls{pem} electrolysis}
+    \label{tab:water_quality}
+    \begin{tabular}{@{}lc@{}}
+        \toprule
+        \textbf{Parameter} & \textbf{Requirement} \\
+        \midrule
+        Conductivity & <1 $\mu$S/cm \\
+        Total dissolved solids & <1 ppm \\
+        Chloride & <0.1 ppm \\
+        pH & 5--7 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Water Treatment System}
+
+The water treatment system includes:
+
+\begin{enumerate}
+    \item \textbf{Particulate filter}: 5 $\mu$m cartridge filter
+    \item \textbf{Carbon filter}: Removes chlorine and organics
+    \item \textbf{Reverse osmosis}: Removes dissolved solids
+    \item \textbf{Deionization}: Mixed-bed ion exchange resin
+    \item \textbf{Storage tank}: 10--20 L treated water buffer
+\end{enumerate}
+
+Water consumption is approximately \SI{1}{L} per \SI{111}{g} of hydrogen produced (stoichiometric), or about \SI{9}{L/kg} H$_2$ accounting for losses.
+
+\section{Compression System}
+
+\subsection{Requirements}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Compressor requirements}
+    \label{tab:compressor_req}
+    \begin{tabular}{@{}lc@{}}
+        \toprule
+        \textbf{Parameter} & \textbf{Specification} \\
+        \midrule
+        Inlet pressure & 1--30 bar \\
+        Outlet pressure & 700 bar \\
+        Flow rate & 0.5--1 Nm$^3$/h \\
+        Compression ratio (overall) & 23--700:1 \\
+        Number of stages & 3--4 \\
+        Power consumption & 0.5--1 kW \\
+        Cooling & Air or water \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Compressor Technology}
+
+Reciprocating piston compressors are the standard technology for high-pressure hydrogen compression. Key design considerations include:
+
+\textbf{Materials compatibility}: Hydrogen causes embrittlement in many steels. Suitable materials include:
+\begin{itemize}
+    \item 316L stainless steel for wetted parts
+    \item Aluminum alloys for certain applications
+    \item Specialized alloys (Inconel, Hastelloy) for high-stress areas
+    \item PTFE or PEEK seals and gaskets
+\end{itemize}
+
+\textbf{Lubrication}: Oil-free (dry) compression is preferred to avoid hydrogen contamination. Alternatives include:
+\begin{itemize}
+    \item PTFE piston rings
+    \item Ionic liquid lubrication
+    \item Diaphragm compressors (completely oil-free)
+\end{itemize}
+
+\subsection{Intercooling}
+
+Each compression stage generates significant heat. For adiabatic compression, the temperature rise is:
+\begin{equation}
+    T_2 = T_1 \left(\frac{p_2}{p_1}\right)^{\frac{\gamma-1}{\gamma}}
+\end{equation}
+
+Without intercooling, a single-stage compression from \SI{1}{bar} to \SI{700}{bar} would raise hydrogen temperature to over \SI{1000}{\celsius}---clearly unacceptable.
+
+Multi-stage compression with intercooling to near-ambient temperature between stages limits the peak temperature to manageable levels (typically <\SI{150}{\celsius}).
+
+\subsection{Commercial Options}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Representative high-pressure hydrogen compressors}
+    \label{tab:compressor_options}
+    \begin{tabular}{@{}lcccc@{}}
+        \toprule
+        \textbf{Manufacturer} & \textbf{Type} & \textbf{Pressure} & \textbf{Flow} & \textbf{Power} \\
+        \midrule
+        PDC Machines & Diaphragm & 900 bar & 1 Nm$^3$/h & 3 kW \\
+        Maximator & Piston & 700 bar & 5 Nm$^3$/h & 5 kW \\
+        Haskel & Piston & 1000 bar & 2 Nm$^3$/h & 2 kW \\
+        HyET Hydrogen & Electrochemical & 200 bar & 1 kg/day & 1 kW \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\section{Storage System}
+
+\subsection{Vessel Specifications}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Storage vessel specifications}
+    \label{tab:vessel_specs}
+    \begin{tabular}{@{}lc@{}}
+        \toprule
+        \textbf{Parameter} & \textbf{Specification} \\
+        \midrule
+        Type & III or IV composite \\
+        Working pressure & 700 bar \\
+        Test pressure & 1050 bar (1.5$\times$) \\
+        Minimum burst & 1575 bar (2.25$\times$) \\
+        Volume & 10--50 L \\
+        H$_2$ capacity & 0.4--2 kg \\
+        Design life & 15 years / 5500 cycles \\
+        Operating temperature & --40 to +85\si{\celsius} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Vessel Construction}
+
+Type IV vessels consist of:
+
+\begin{enumerate}
+    \item \textbf{Liner}: High-density polyethylene (HDPE), 3--5 mm thick
+    \item \textbf{Overwrap}: Carbon fiber reinforced polymer (CFRP)
+    \item \textbf{Outer protection}: Impact-resistant cover
+    \item \textbf{Boss}: Aluminum or steel end fitting for valve attachment
+\end{enumerate}
+
+\subsection{Cost Considerations}
+
+High-pressure composite vessels represent a significant portion of system cost:
+
+\begin{itemize}
+    \item Type IV \SI{700}{bar} vessels: \EUR{2000}--\EUR{5000} for 10--50 L
+    \item Primary cost driver: Carbon fiber material
+    \item Cost reduction expected as production scales with \gls{fcev} market
+\end{itemize}
+
+\section{Dispensing System}
+
+\subsection{Nozzle and Receptacle}
+
+The dispensing interface must comply with ISO 17268 and SAE J2600:
+
+\begin{itemize}
+    \item Nozzle type: H70 (700 bar, hydrogen)
+    \item Connection: Proprietary latching mechanism
+    \item Infrared communication: Vehicle tank status exchange
+    \item Breakaway: Safety disconnect under tension
+    \item Grounding: Equipotential bonding
+\end{itemize}
+
+\subsection{Fill Protocol}
+
+SAE J2601 defines fueling protocols. For home application, the ``non-communication'' fueling protocol with reduced flow rate is appropriate:
+
+\begin{itemize}
+    \item Precooling: Not required (slow fill)
+    \item Target pressure: Based on ambient temperature lookup table
+    \item Fill rate: Limited to prevent thermal stress
+    \item Termination: Pressure equalization or timer
+\end{itemize}
+
+\subsection{Dispensing Hardware}
+
+\begin{itemize}
+    \item High-pressure hose: 700 bar rated, 1--2 m length
+    \item Flow meter: Optional, for usage tracking
+    \item Pressure regulator: Downstream pressure control
+    \item Check valve: Prevent backflow
+    \item Emergency shutoff: Pneumatic or solenoid operated
+\end{itemize}
+
+\section{Safety Systems}
+
+\subsection{Hydrogen Detection}
+
+Hydrogen sensors are distributed throughout the system:
+
+\begin{itemize}
+    \item Near electrolyzer
+    \item Near compressor
+    \item Near storage vessel
+    \item In enclosure/room
+\end{itemize}
+
+Sensor specifications:
+\begin{itemize}
+    \item Technology: Catalytic bead or electrochemical
+    \item Range: 0--4\% (0--100\% \gls{lel})
+    \item Alarm setpoints: 10\% LEL (warning), 25\% LEL (shutdown)
+    \item Response time: <30 seconds to 50\% of final value
+\end{itemize}
+
+\subsection{Pressure Relief}
+
+Multiple pressure relief mechanisms protect against overpressure:
+
+\begin{enumerate}
+    \item \textbf{Pressure relief valve}: Set at 110\% of working pressure
+    \item \textbf{Burst disc}: Backup protection at 125\% of working pressure
+    \item \textbf{\Gls{tprd}}: Thermally-activated relief for fire exposure
+\end{enumerate}
+
+\subsection{Emergency Shutdown}
+
+Emergency shutdown (ESD) capability includes:
+
+\begin{itemize}
+    \item Manual ESD button: Accessible at system and room exit
+    \item Automatic ESD triggers: H$_2$ detection, fire detection, overpressure
+    \item ESD actions: Stop production, close isolation valves, de-energize ignition sources
+\end{itemize}
+
+\section{Control and Instrumentation}
+
+\subsection{Sensors}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Control system sensor list}
+    \label{tab:sensors}
+    \begin{tabular}{@{}llcc@{}}
+        \toprule
+        \textbf{Tag} & \textbf{Service} & \textbf{Range} & \textbf{Type} \\
+        \midrule
+        PT-001 & Electrolyzer H$_2$ outlet & 0--50 bar & Piezoelectric \\
+        PT-002 & Buffer tank & 0--50 bar & Piezoelectric \\
+        PT-003 & Compressor interstage & 0--100 bar & Strain gauge \\
+        PT-004 & Storage vessel & 0--1000 bar & Strain gauge \\
+        TT-001 & Electrolyzer stack & 0--100\si{\celsius} & RTD \\
+        TT-002 & Compressor discharge & 0--200\si{\celsius} & Thermocouple \\
+        TT-003 & Storage vessel & --40--100\si{\celsius} & RTD \\
+        FT-001 & Water inlet & 0--5 L/h & Turbine \\
+        LT-001 & Water tank level & 0--100\% & Capacitive \\
+        AT-001--004 & H$_2$ detection & 0--4\% & Catalytic \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Controller}
+
+A programmable logic controller (PLC) or industrial PC manages system operation:
+
+\begin{itemize}
+    \item Digital I/O: Valve control, pump control, status indicators
+    \item Analog I/O: Sensor inputs, power control outputs
+    \item Communication: Ethernet, Modbus, or CAN bus
+    \item Data logging: Local storage + cloud upload option
+    \item HMI: Touch screen display or web interface
+\end{itemize}

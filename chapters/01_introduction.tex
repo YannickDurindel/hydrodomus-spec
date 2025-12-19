@@ -1,0 +1,135 @@
+This chapter introduces the context and motivation for home-based hydrogen generation systems. The current state of hydrogen mobility infrastructure is examined, and the fundamental concept of the Hydrodomus system is presented along with the objectives of this technical specification.
+
+\section{The Hydrogen Mobility Challenge}
+
+\subsection{Current State of Hydrogen Vehicles}
+
+Hydrogen \glspl{fcev} represent one of the most promising pathways toward zero-emission transportation. Unlike \glspl{bev}, which store energy in batteries, \glspl{fcev} generate electricity on-board through an electrochemical reaction between hydrogen and oxygen, producing only water as a byproduct. This approach offers several advantages:
+
+\begin{itemize}
+    \item \textbf{Rapid refueling}: A full tank can be achieved in 3--5 minutes, comparable to conventional vehicles
+    \item \textbf{Long range}: Modern \glspl{fcev} achieve 500--700 km per tank
+    \item \textbf{No degradation}: Unlike batteries, fuel cells do not suffer from cycle-dependent capacity loss
+    \item \textbf{Weight advantage}: For larger vehicles and long-range applications, hydrogen storage is lighter than equivalent battery capacity
+\end{itemize}
+
+Several major automotive manufacturers have invested significantly in \gls{fcev} technology. The Toyota Mirai, now in its second generation, demonstrates the commercial maturity of the technology with a range exceeding \SI{650}{km}. BMW has developed the iX5 Hydrogen, Hyundai offers the Nexo SUV, and various commercial vehicle manufacturers are developing hydrogen-powered trucks and buses.
+
+\paragraph{The Fundamental Problem}
+
+Despite technological maturity, \gls{fcev} adoption faces a critical barrier: the lack of refueling infrastructure. As of 2024, there are approximately 1,000 hydrogen refueling stations worldwide, compared to over 150,000 gasoline stations in the United States alone. This creates the well-known ``chicken-and-egg'' problem:
+
+\begin{itemize}
+    \item Consumers hesitate to purchase \glspl{fcev} due to limited refueling options
+    \item Infrastructure investors hesitate to build stations due to low vehicle population
+    \item Vehicle manufacturers cannot achieve economies of scale without consumer demand
+\end{itemize}
+
+This situation contrasts sharply with \glspl{bev}, where home charging provides a baseline capability that mitigates range anxiety. An \gls{bev} owner can always charge at home overnight, even if public charging infrastructure is limited. \gls{fcev} owners have no equivalent option---until now.
+
+\subsection{The Home Refueling Concept}
+
+The Hydrodomus system proposes to break the infrastructure deadlock by bringing hydrogen production directly to the consumer's residence. Just as an \gls{bev} owner plugs in their vehicle overnight, a Hydrodomus owner would generate hydrogen at home using water and electricity.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[
+        node distance=2.5cm,
+        block/.style={rectangle, draw, thick, minimum width=2cm, minimum height=1cm, align=center, fill=blue!10, font=\small},
+        arrow/.style={-{Stealth}, thick}
+    ]
+        % Inputs
+        \node[block] (water) {Water\\Supply};
+        \node[block, below=1cm of water] (elec) {Electricity\\(Grid/Solar)};
+
+        % System
+        \node[block, right=of water, yshift=-0.75cm, minimum width=3cm, minimum height=2.5cm, fill=green!10] (system) {Hydrodomus\\System};
+
+        % Output
+        \node[block, right=of system] (storage) {H\textsubscript{2}\\Storage};
+        \node[block, right=of storage] (vehicle) {FCEV};
+
+        % Arrows
+        \draw[arrow] (water.east) -- ++(0.5,0) |- ([yshift=0.4cm]system.west);
+        \draw[arrow] (elec.east) -- ++(0.5,0) |- ([yshift=-0.4cm]system.west);
+        \draw[arrow] (system) -- node[above, font=\scriptsize] {\SI{700}{bar}} (storage);
+        \draw[arrow] (storage) -- (vehicle);
+
+    \end{tikzpicture}
+    \caption{Conceptual overview of the Hydrodomus home hydrogen generation system. Water and electricity are converted to compressed hydrogen for vehicle refueling.}
+    \label{fig:concept_overview}
+\end{figure}
+
+This approach transforms the infrastructure problem from a societal challenge into an individual solution. Each \gls{fcev} owner becomes independent of the public refueling network, at least for routine daily driving. The benefits include:
+
+\begin{itemize}
+    \item \textbf{Energy independence}: Users are not dependent on the location or availability of public stations
+    \item \textbf{Cost predictability}: Fuel costs depend on electricity prices rather than volatile hydrogen markets
+    \item \textbf{Convenience}: Refueling occurs at home, similar to \gls{bev} charging
+    \item \textbf{Grid integration}: The system can operate during off-peak hours or use surplus renewable energy
+\end{itemize}
+
+\section{Market Context}
+
+\subsection{Existing Solutions}
+
+The concept of home hydrogen generation is not entirely new, though no commercial system currently meets the requirements for automotive refueling at \SI{700}{bar}. Existing approaches include:
+
+\textbf{Industrial electrolyzers}: Large-scale \gls{pem} and alkaline electrolyzers are commercially available from manufacturers such as Nel, ITM Power, and Siemens. These systems are designed for industrial applications and typically produce hydrogen at low pressure (\SI{30}{bar} or less), requiring additional compression for automotive use.
+
+\textbf{Home hydrogen generators}: Several companies have marketed small-scale hydrogen generators for laboratory or backup power applications. These typically operate at atmospheric pressure and produce insufficient quantities for vehicle refueling.
+
+\textbf{Toyota's home hydrogen concept}: Toyota has announced development of a home hydrogen system in Japan, though details remain limited and the system appears targeted at the Japanese market with its specific regulatory environment.
+
+\subsection{Technology Readiness}
+
+The individual components required for a home hydrogen system are all commercially available:
+
+\begin{itemize}
+    \item \gls{pem} electrolyzers at the 1--5 kW scale
+    \item High-pressure hydrogen compressors capable of \SI{700}{bar}
+    \item Type IV composite hydrogen storage vessels
+    \item SAE J2601-compliant dispensing nozzles
+\end{itemize}
+
+The challenge lies not in developing new technology but in integrating these components into a safe, certified, and cost-effective residential system.
+
+\section{Project Objectives}
+
+\subsection{Technical Objectives}
+
+The Hydrodomus project aims to develop a complete home hydrogen generation system with the following technical specifications:
+
+\begin{enumerate}
+    \item \textbf{Hydrogen production}: Minimum \SI{0.5}{kg/day} production capacity using \gls{pem} electrolysis
+    \item \textbf{Storage pressure}: \SI{700}{bar} (70 MPa) to match automotive standards
+    \item \textbf{Storage capacity}: Minimum \SI{10}{L} at \SI{700}{bar}, equivalent to approximately \SI{0.4}{kg} H\textsubscript{2}
+    \item \textbf{Dispensing}: SAE J2601-compliant refueling interface
+    \item \textbf{Efficiency}: System efficiency $>$60\% (electricity to stored hydrogen)
+    \item \textbf{Safety}: Full compliance with applicable residential and hydrogen safety standards
+\end{enumerate}
+
+\subsection{Commercial Objectives}
+
+Beyond technical feasibility, the project must achieve commercial viability:
+
+\begin{itemize}
+    \item Target system cost allowing payback within 5--7 years compared to station refueling
+    \item Minimal maintenance requirements suitable for residential operation
+    \item User-friendly interface requiring no specialized knowledge
+    \item Certification pathway enabling legal installation in residential settings
+\end{itemize}
+
+\section{Document Structure}
+
+This technical specification is organized as follows:
+
+\textbf{Chapter 2: Theoretical Background} presents the scientific foundations required to understand the system, including electrochemistry of water electrolysis, thermodynamics of hydrogen compression, and gas storage physics.
+
+\textbf{Chapter 3: System Architecture} describes the complete system design, including process flow, subsystem interactions, and control strategy.
+
+\textbf{Chapter 4: Component Specifications} provides detailed requirements for each major component, with reference to commercially available solutions.
+
+\textbf{Chapter 5: Safety and Certifications} analyzes the applicable safety standards and outlines the certification pathway for residential deployment.
+
+\textbf{Chapter 6: Conclusions and Future Work} summarizes the technical findings and identifies next steps for prototype development.

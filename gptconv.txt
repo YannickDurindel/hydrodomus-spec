@@ -1,0 +1,127 @@
+“Salut, tu m'entends ?”
+00:01
+“Je réfléchis, je vais arrêter ma start-up dans l'éducation, donc j'arrête complètement mes activités dans l'éducation et je pars sur quelque chose de complètement différent dans l'hydrogène. C'est ce que j'étudie, c'est un peu ma spécialité, mais en réalité c'est ma spécialité dans le domaine dynamique des fluides. Là, j'aimerais partir sur la génération d'hydrogène à la maison, pour alimenter les voitures, pour les clients qui achètent des voitures à hydrogène et qui, au lieu d'aller à la station, peuvent créer leur hydrogène chez eux.”
+00:32
+“Y a-t-il des normes pour l'instant ? Est-ce que c'est toujours la même prise pour les voitures ?”
+00:08
+“Oui, d'accord.”
+00:03
+“En termes de volume de gaz, dans une voiture, j'ai regardé certains modèles qui existaient, j'ai vu qu'il y avait la Toyota Mirai et des BMW X7, j'ai vu certains modèles. Bien sûr, il y a l'Alpine Alpine Glow, par contre en moteur combustion, en fuel cell. Quel volume de gaz il faut attendre pour faire un plein ?”
+00:26
+“Vous avez vu 70 bars de pression de stockage, c'est ça ?”
+00:02
+“Volume de bouteille.”
+00:01
+“Quelle bouteille ce serait ?”
+00:02
+“Si je veux avoir une bouteille à la maison à 700 barres d'hydrogène, c'est quel volume ?”
+00:06
+“Pour nous, pour un plein complet de voitures.”
+00:02
+“Thank you.”
+00:00
+“Est-ce que c'est à température ambiante ?”
+00:02
+“Si je veux fabriquer mon système et que je veux mettre ça dans les maisons, par exemple dans le garage pour la voiture, comme on chargerait une voiture électrique, là ce serait une bouteille à température ambiante ?”
+00:10
+“Par contre, dans les bouteilles, c'est de l'hydrogène pur ou c'est un mélange avec l'oxygène ? Parce que typiquement, lorsque je veux faire de l'hydrogène, l'une des méthodes sera de faire de l'électrolyse de l'eau directement. Mais par contre, ça me fabrique de l'hydrogène et de l'oxygène. J'imagine que je ne peux pas mélanger les deux, ce serait trop dangereux.”
+00:18
+“Lorsque je ne veux conserver que l'hydrogène dans une bouteille avec de l'électrolyse, comment je peux faire ? Je vois un challenge, c'est que les bulles se mélangent dans l'eau, donc c'est compliqué de prendre que l'oxygène. Je vois deux options, la première serait de séparer bien les électrodes dans l'eau, donc de faire d'un côté l'hydrogène, l'anode, et de l'autre côté cathode, oxygène, ou je ne sais pas, peut-être c'est l'inverse, et donc bien séparer les bulles et avoir un côté où je récupère l'oxygène et l'autre côté l'hydrogène. Mais ça, c'est embêtant parce qu'il y a un effet joule assez important puisque les cathodes et anodes seraient donc éloignés dans l'eau. Est-ce que c'est correct ?”
+00:44
+“Allô, tu m'as perdu ?”
+00:01
+“Parler de membrane, c'est très intelligent, je ne pensais pas, par exemple mettre du coton entre plusieurs... Comme ça, ça laisse passer quand même l'eau, mais les bulles n'ont pas passé. Comme ça, ça les laisse quand même assez proches, les anodécathodes, mais voilà.”
+00:14
+“Ok, moi je pensais peut-être faire une chambre de mélange au-dessus, c'est-à-dire récupérer les gaz dans un réservoir plus ou moins gros, admettons 5 litres, et donc le gaz arrive dedans, et prendre une entrée par le haut et une entrée par le bas, donc par le bas ce serait l'oxygène, et le haut l'hydrogène, faire une séparation simplement par la gravité. Est-ce que ça serait possible ou avec un débit élevé, la séparation ne se ferait pas ?”
+00:36
+“Réalistiquement, qu'est-ce que tu penses comme idée ? Comment est-ce qu'on pourrait faire pour être le plus efficace possible ?”
+00:06
+“Ah, donc tu dis « mentiler » parce que ça aussi, il y a une question de chaleur.”
+00:03
+“J'ai vu aussi qu'il y avait une question de...”
+00:10
+“Quelle serait l'efficacité que l'on attend ?”
+00:04
+“Très bien. Et l'efficacité des fiouls, c'est?”
+00:02
+“En outre, j'ai vu que dans l'eau, lorsqu'on fait l'électrolyse, dans l'eau il était ajouté un autre composant. J'avais vu de l'acide citrique, ou alors du sel, ou certains autres. J'ai vu qu'il y en avait certains qui étaient plus efficaces que d'autres, qu'il y avait des tests qui avaient été réalisés. Ma question c'est, est-ce que, moi si je fais mon système, l'utilisateur devra en rajouter dans l'eau régulièrement, ou ça reste dans le liquide ? Parce qu'au final, ça ne se transforme pas en hydrogène.”
+00:29
+“Est-ce que c'est possible de faire un boîtier qui amortisse une onde de choc ou une flamme ?”
+00:12
+“En ce qui concerne la sécurité des bouteilles, je vois des bouteilles à hydrogène là dehors et j'ai l'impression qu'il y a des fibres de carbone à l'extérieur qui les maintiennent, est-ce que c'est possible ?”
+00:19
+“Après moi, le poids n'est pas vraiment important puisque ça va rester dans la maison, donc ça ne va pas aller dans la voiture. Là, je réfléchis un peu en termes de sécurité parce qu'au final, puisqu'il n'y a plus d'oxygène dans la bouteille, il n'y a pas de risque d'explosion. Il y aura un risque s'il y avait de l'oxygène mélangé à l'hydrogène, c'est bon. Est-ce que c'est plus dangereux qu'un gaz, par exemple du butane ou du méthane ?”
+00:22
+“Par exemple, si j'ai une bouteille fermée et qu'il y a une petite explosion à côté, ça ne va pas être un problème parce qu'au final la bouteille sera fermée. Même si la bouteille reçoit un choc, tant qu'elle ne fuit pas, il n'y aura pas d'explosion.”
+00:20
+“En termes de pompe, j'imagine qu'il faut une pompe à piston pour monter à 700 bar.”
+00:09
+“Ah, peut-être aussi les pompes qu'il y a, les turbomachines, un peu pour les voitures turbocompresseurs, à vis, non ? Ou ce n'est pas assez ?”
+00:09
+“Est-ce que c'est vraiment une grosse consommation d'énergie la partie pompe ? Si je fais, par exemple, la partie électrode et la partie pompe, la pompe prendra une grosse partie de l'énergie ou la majorité restera sur les électrodes ?”
+00:16
+“Very good. I don't want to take any risks for the bottles, etc. So I think we should buy them directly from specialized bottle makers for this type of system, hydrogen, etc. Who can I contact? Because I imagine I'm going to take normal bottles, like butane, etc. Because there we reach much higher pressures. Who can I contact? Can you hear me?”
+00:27
+“Oui, oui, à qui je peux m'adresser.”
+00:01
+“Tu peux m'attendre pour une bouteille de 10 litres à 700 bars.”
+00:02
+“Je ne m'attendais pas à un prix pareil. En fait, pour passer les certifications, parce que là tu es en train de dire qu'il y a des certifications qui sont en train d'arriver pour la sécurité, effectivement c'est essentiel, quels sont les degrés de certification qu'il va me falloir pour mon système ? Parce que si tu as bien compris, il y aura un bac liquide avec les électrodes qui vont fabriquer le gaz, l'hydrogène, que je vais garder dans une sorte de bac qui va se remplir, et ensuite il y aura une pompe qui va envoyer ce gaz dans une bouteille. Quelle certification il faut que je passe pour pouvoir être certifié ? Par exemple, si je veux pouvoir prétendre le vendre en partenariat avec Toyota, admettons.”
+00:47
+“Les normes difficiles à avoir, comment je fais pour passer une norme ?”
+00:03
+“Je pense aussi à la partie connexion aux voitures. Certes, il y aura les bouteilles, mais il y aura aussi la partie recharge de la bouteille, et après il y aura la partie décharge, où je vais devoir faire la connexion entre la bouteille et la voiture à 700 bars. Ça aussi, j'imagine qu'il y a des certifications spéciales pour pouvoir le faire.”
+00:24
+“Très bien, merci.”
+00:01
+“Maintenant que tu connais le projet que je veux faire, est-ce que tu peux m'aider à trouver un nom d'entreprise ?”
+00:07
+“C'est important de faire un nom qui soit court, facile à retenir, qui ait un sens aussi. Par exemple, l'ancienne entreprise que j'avais, c'était dans l'éducation, j'avais DOCORI. DOCORI, c'est bien, c'est trois syllabes, c'est pas trop long. DOCORI, ça veut dire donc j'apprends ou j'enseigne, et j'enseigne en latin. Donc ça, c'était très bien, c'était vraiment dans le thème. J'aime bien un peu ce genre de thème avec l'hydrogène et à la maison, sécurité, innovation, d'accord. Hydrogène, maison, sécurité, innovation, ce sera le thème un peu global. Trouver un mot assez court, qui ait un sens peut-être dans une autre langue, un peu en grec ou en latin, ça peut être bien. Ou peut-être des références mythologiques, hydro, peut-être jouer avec le hydros, etc. Qu'est-ce que tu pourrais penser ?”
+00:53
+“Je recherche si un nom est déjà disponible ou pas. Donc, Prométhée, j'aime bien.”
+00:06
+“Cependant, il y a déjà des entreprises françaises qui s'appellent Prometheus, et assez surprenant, j'en vois plusieurs, alors que je pensais qu'il n'y en avait qu'une seule.”
+00:08
+“C'était bien. Comment tu l'écris ?”
+00:03
+“Thank you. Thank you.”
+00:01
+Transcript Unavailable
+00:01
+“C'est pas un peu long comme nom de surprise, HydroBT ?”
+00:02
+“Ḥḵᶜᶜᶜᶜᶜᶜ.”
+00:00
+“Pourquoi est-ce que tu mentionnais Médée ? On était sur Prométhée. Qui est Médée ? Je me souviens de Médée dans la mythologie, mais je n'arrive plus à me souvenir qui c'était.”
+00:10
+“OK, non, non, non, on va présenter sur Hydromus, Hydrodomus, Domus Hydro, c'était bien, Hydrodomus.”
+00:06
+“J'aimerais vérifier si ça n'existe pas déjà. Est-ce que tu trouves un lien avec hydrodomus ? Je vois déjà le terme hydrodomus apparaître dans un contexte scientifique comme une espèce biologique, qui serait donc une sorte d'araignée, je crois. Je ne sais pas ce que c'est shrew, hydrodomus, species of freshwater crab. Ah, il y a le petit crabe !”
+00:32
+“Est-ce qu'il existe une entreprise qui s'appelle Hydrodomus ?”
+00:08
+“L'encontre est disponible, j'ai vérifié sur le site INPI, c'est bon. Donc on part avec Hydrodomus.”
+00:05
+“Ok, j'aimerais que tu m'aides sur qu'est-ce qu'on fait comme... Là, je fais la candidature YC, en fait, et j'ai la question « Describe what your company does in 15 characters or less. » Qu'est-ce que j'écris ?”
+00:15
+“Make hydrogen at home for your car.”
+00:03
+“What is your company going to make? Please describe your product and what it does and will do.”
+00:08
+“À réduction des coûts, tu me disais tout à l'heure que la bouteille allait coûter entre 2 000 et 5 000 €, donc le système va coûter cher à la fin, parce qu'il va falloir acheter une bonne pompe. Je pense qu'au final, si je tire les prix au bas, on va être autour des 2 000 à 5 000 €.”
+00:18
+“Est-ce que l'utilisateur va vraiment faire des économies financières en utilisant l'hydrogène chez lui par rapport aux stations-service?”
+00:08
+“Est-ce que tu vois des entreprises qui le font, ça, déjà ?”
+00:03
+“Ok, quelles sont les dates estimées de sortie et de production ?”
+00:03
+“Quelle est la mesure du brevet qu'a déposé Toyota ? Moi, typiquement, mon projet, là, tu as compris ce que je veux faire, est-ce que ça va ?”
+00:10
+help me rewrite : What is your company going to make? Please describe your product and what it does or will do.
+We allow hydrogen car owners refuel at home.
+We are building a device that from water and electricity supply stores hydrogen at high pressure, so when you need it you can fill your car at home, relying on your own supplies rather than a station.
+Worth noticing there are not hydrogen station everywhere.
+Who are your competitors? What do you understand about your business that they don't?
+make it short and give direct and indirect competitor. Talk about toyota
+what is wrong with toyota product they want to make ?
