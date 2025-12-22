@@ -33,7 +33,7 @@ The Hydrodomus system proposes to break the infrastructure deadlock by bringing 
 
 \begin{figure}[htbp]
     \centering
-    \begin{tikzpicture}[
+    \begin{tikzpicture}[scale=0.9, transform shape,
         node distance=2.5cm,
         block/.style={rectangle, draw, thick, minimum width=2cm, minimum height=1cm, align=center, fill=blue!10, font=\small},
         arrow/.style={-{Stealth}, thick}
@@ -68,6 +68,40 @@ This approach transforms the infrastructure problem from a societal challenge in
     \item \textbf{Convenience}: Refueling occurs at home, similar to \gls{bev} charging
     \item \textbf{Grid integration}: The system can operate during off-peak hours or use surplus renewable energy
 \end{itemize}
+
+\subsection{Overnight Charging Operation}
+
+A key operational mode for Hydrodomus mirrors the familiar experience of \gls{bev} charging: the vehicle is connected overnight, and by morning it is ready for the day's driving. This ``plug and forget'' paradigm offers compelling advantages:
+
+\textbf{User experience comparison:}
+\begin{itemize}
+    \item \textbf{\gls{bev}}: Plug in at night $\rightarrow$ 8 hours charging $\rightarrow$ 300 km range added
+    \item \textbf{Hydrodomus}: Connect at night $\rightarrow$ 8 hours H\textsubscript{2} generation $\rightarrow$ 35 km range added
+    \item \textbf{Weekly accumulation}: 7 nights $\times$ 35 km = 245 km/week capacity
+\end{itemize}
+
+While nightly range addition is less than \gls{bev} charging, it is sufficient for typical commuter patterns. The key insight is that most \gls{fcev} owners drive 200--300 km per week, well within the weekly production capacity of a \SI{2}{kW} electrolyzer running overnight.
+
+\textbf{Smart grid integration:}
+\begin{itemize}
+    \item Automatic scheduling to off-peak electricity hours
+    \item Integration with home energy management systems
+    \item Potential demand response participation
+    \item Solar PV surplus utilization during daytime
+    \item Battery storage coordination for 24-hour optimization
+\end{itemize}
+
+\textbf{No hydrogen bottles required:}
+
+Unlike alternative home hydrogen concepts that rely on delivered hydrogen cylinders, Hydrodomus generates hydrogen on-site from water and electricity. This eliminates:
+\begin{itemize}
+    \item Bottle delivery logistics and scheduling
+    \item Cylinder rental fees
+    \item Storage space for multiple high-pressure bottles
+    \item Regulatory complexity of storing delivered hydrogen
+\end{itemize}
+
+The continuous generation approach means the system produces small amounts of hydrogen constantly, accumulating over time in a compact buffer tank before final compression to \SI{700}{bar} storage.
 
 \section{Market Context}
 

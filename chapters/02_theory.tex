@@ -169,6 +169,108 @@ The specific energy consumption is often expressed as:
 
 For a cell operating at \SI{1.8}{V}, the specific energy consumption is approximately \SI{48}{kWh/kg} of hydrogen.
 
+\subsection{Nernst Equation and Temperature Effects}
+
+The reversible voltage for electrolysis depends on temperature and pressure according to the Nernst equation:
+\begin{equation}
+    E_{rev} = E^0 - \frac{RT}{nF}\ln\left(\frac{a_{H_2} \cdot a_{O_2}^{0.5}}{a_{H_2O}}\right)
+    \label{eq:nernst}
+\end{equation}
+
+where $a$ represents the activity of each species. For practical purposes, the temperature dependence of the reversible voltage can be approximated as:
+\begin{equation}
+    E_{rev}(T) \approx 1.229 - 0.00085(T - 298) \quad [\si{V}]
+    \label{eq:temp_dependence}
+\end{equation}
+
+\paragraph{Practical Implications of Temperature}
+
+Operating at elevated temperatures (50--80\si{\celsius}) provides several benefits:
+\begin{itemize}
+    \item \textbf{Lower reversible voltage}: Reduces thermodynamic minimum energy requirement
+    \item \textbf{Faster kinetics}: Exponentially reduces activation overpotential
+    \item \textbf{Higher ionic conductivity}: Reduces ohmic losses in membrane
+    \item \textbf{Trade-off}: Higher temperatures accelerate membrane degradation
+\end{itemize}
+
+The optimal operating temperature for \gls{pem} electrolyzers is typically 60--80\si{\celsius}, balancing efficiency gains against component longevity.
+
+\subsection{Catalyst Materials and Cost Considerations}
+
+The choice of catalyst materials significantly impacts both performance and system cost.
+
+\textbf{Cathode (HER) catalysts:}
+\begin{itemize}
+    \item Platinum (Pt) is the standard catalyst with loadings of 0.1--0.5 mg/cm\textsuperscript{2}
+    \item Platinum cost: approximately \EUR{25--30}/g (2024 prices)
+    \item For a 100 cm\textsuperscript{2} electrode: \EUR{250--1500} in catalyst alone
+    \item Research focus: reducing Pt loading or substituting with Ni-based catalysts
+\end{itemize}
+
+\textbf{Anode (OER) catalysts:}
+\begin{itemize}
+    \item Iridium oxide (IrO\textsubscript{2}) required due to harsh oxidizing conditions
+    \item Iridium cost: approximately \EUR{150--200}/g (highly volatile, limited supply)
+    \item Typical loading: 1--2 mg/cm\textsuperscript{2}
+    \item Iridium is a critical bottleneck for \gls{pem} electrolyzer scale-up
+    \item Research focus: mixed metal oxides (Ir-Ru), reduced loadings
+\end{itemize}
+
+\subsection{Membrane Degradation Mechanisms}
+
+Understanding membrane degradation is critical for predicting system lifetime:
+
+\textbf{Chemical degradation:}
+\begin{itemize}
+    \item Hydrogen peroxide (H\textsubscript{2}O\textsubscript{2}) formation from gas crossover
+    \item Radical attack on polymer backbone (Fenton mechanism)
+    \item Fluoride release as degradation indicator
+\end{itemize}
+
+\textbf{Mechanical degradation:}
+\begin{itemize}
+    \item Humidity cycling causes swelling/shrinking stress
+    \item Creep under compression at elevated temperature
+    \item Pinhole formation leading to gas crossover
+\end{itemize}
+
+\textbf{Contamination:}
+\begin{itemize}
+    \item Cationic impurities (Ca\textsuperscript{2+}, Fe\textsuperscript{3+}) replace protons, reducing conductivity
+    \item Chloride ions poison catalyst irreversibly
+    \item Importance of high-purity water feed
+\end{itemize}
+
+\subsection{Water Purity Requirements}
+
+The feed water quality is critical for \gls{pem} electrolyzer longevity:
+
+\begin{table}[htbp]
+    \centering
+    \caption{Water purity impact on electrolyzer performance}
+    \label{tab:water_purity_effects}
+    \begin{tabular}{@{}lll@{}}
+        \toprule
+        \textbf{Contaminant} & \textbf{Mechanism} & \textbf{Effect} \\
+        \midrule
+        Chloride (Cl\textsuperscript{--}) & Catalyst poisoning & Irreversible performance loss \\
+        Calcium (Ca\textsuperscript{2+}) & Ion exchange with membrane & Conductivity loss \\
+        Iron (Fe\textsuperscript{2+/3+}) & Fenton reaction catalyst & Accelerated degradation \\
+        Organics & Catalyst fouling & Increased overpotential \\
+        Silica (SiO\textsubscript{2}) & Surface deposition & Blocked active sites \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+For home applications, tap water must be treated to achieve:
+\begin{itemize}
+    \item Resistivity $>$1 M$\Omega$·cm (conductivity $<$1 $\mu$S/cm)
+    \item Total dissolved solids $<$1 ppm
+    \item Chloride $<$0.1 ppm (critical)
+\end{itemize}
+
+A typical water treatment train consists of: sediment filter $\rightarrow$ activated carbon $\rightarrow$ reverse osmosis $\rightarrow$ mixed-bed deionizer.
+
 \subsection{Faraday's Laws of Electrolysis}
 
 Faraday's laws provide the quantitative relationship between electrical charge and the amount of substance produced:
@@ -399,6 +501,71 @@ where $N$ is the number of compression stages and $\gamma = 1.41$ for hydrogen.
 
 Including mechanical inefficiencies, practical compression energy is typically 3--5 kWh/kg for compression from \SI{30}{bar} to \SI{700}{bar}.
 
+\subsection{Multi-Stage Compression Design}
+
+For high compression ratios, multi-stage compression with intercooling is essential. The optimal number of stages minimizes total work while keeping discharge temperatures manageable.
+
+\textbf{Optimal pressure ratio per stage:}
+For $N$ stages with equal pressure ratios:
+\begin{equation}
+    r_{stage} = \left(\frac{p_{final}}{p_{initial}}\right)^{1/N}
+    \label{eq:stage_ratio}
+\end{equation}
+
+For compression from \SI{30}{bar} to \SI{700}{bar}:
+\begin{itemize}
+    \item 2 stages: $r = 4.83$ per stage
+    \item 3 stages: $r = 2.87$ per stage
+    \item 4 stages: $r = 2.19$ per stage (typical choice)
+\end{itemize}
+
+\textbf{Discharge temperature calculation:}
+\begin{equation}
+    T_{discharge} = T_{inlet} \times r^{\frac{\gamma-1}{\gamma}}
+    \label{eq:discharge_temp}
+\end{equation}
+
+With 4 stages starting at \SI{25}{\celsius} and $\gamma = 1.41$:
+\begin{equation}
+    T_{discharge} = 298 \times 2.19^{0.29} = 298 \times 1.25 = \SI{373}{K} = \SI{100}{\celsius}
+\end{equation}
+
+This is manageable with standard materials. Intercoolers return the gas to near-ambient temperature between stages.
+
+\subsection{Joule-Thomson Effect}
+
+When compressed hydrogen expands (e.g., during dispensing), the Joule-Thomson effect determines whether the gas heats or cools:
+
+\begin{equation}
+    \mu_{JT} = \left(\frac{\partial T}{\partial p}\right)_H
+    \label{eq:joule_thomson}
+\end{equation}
+
+For hydrogen at room temperature, $\mu_{JT}$ is negative (inversion temperature $\approx$ \SI{200}{K}), meaning hydrogen \textit{heats up} upon expansion at typical operating temperatures. This has important implications:
+
+\begin{itemize}
+    \item \textbf{During fast refueling}: Expanding hydrogen heats the vehicle tank
+    \item \textbf{Pre-cooling requirement}: Station dispensers cool hydrogen to \SI{-40}{\celsius} for fast fills
+    \item \textbf{Home application advantage}: Slow fill allows heat dissipation, no pre-cooling needed
+\end{itemize}
+
+\subsection{Heat Management in Compression}
+
+The compression process generates significant heat that must be removed:
+
+\textbf{Heat generated per stage:}
+\begin{equation}
+    Q = \dot{m} \cdot c_p \cdot (T_{discharge} - T_{inlet}) = \dot{m} \cdot c_p \cdot T_{inlet} \cdot (r^{\frac{\gamma-1}{\gamma}} - 1)
+    \label{eq:compression_heat}
+\end{equation}
+
+For a system producing \SI{0.5}{kg/day} (\SI{20.8}{g/h}):
+\begin{itemize}
+    \item Heat per stage: approximately \SI{100}{W} at full operation
+    \item Total compression heat: 300--400 W for 3--4 stages
+    \item Cooling method: Air-cooled intercoolers adequate for residential scale
+\end{itemize}
+
 \section{Hydrogen Storage}
 
 \subsection{Storage Methods Overview}
@@ -548,3 +715,129 @@ The \gls{lhv} of hydrogen is \SI{33.3}{kWh/kg}, so the electricity-to-hydrogen e
     \eta = \frac{33.3}{54} \approx 62\%
     \label{eq:overall_efficiency}
 \end{equation}
+
+\section{Continuous On-Site Generation vs. Bottled Hydrogen}
+
+A fundamental advantage of home hydrogen generation is the elimination of bottled hydrogen logistics. This section analyzes the theoretical basis for continuous on-site production.
+
+\subsection{The Overnight Generation Paradigm}
+
+Unlike bottled hydrogen delivery, which requires periodic bulk refills, on-site electrolysis enables continuous, low-rate production that matches consumption patterns. The key insight is that vehicle refueling is episodic (minutes per week) while electricity consumption can be distributed over extended periods.
+
+\textbf{Energy storage comparison:}
+
+Consider a homeowner needing \SI{1}{kg} of hydrogen per week (approximately 100 km of driving):
+
+\begin{table}[htbp]
+    \centering
+    \caption{Comparison of hydrogen supply methods}
+    \label{tab:supply_comparison}
+    \begin{tabular}{@{}lccc@{}}
+        \toprule
+        \textbf{Parameter} & \textbf{Station Fill} & \textbf{Bottle Delivery} & \textbf{On-Site Generation} \\
+        \midrule
+        Fill frequency & Weekly trip & Monthly delivery & Continuous \\
+        Storage needed & Vehicle tank only & 50--200 bar bottles & 10--20 L buffer \\
+        Electricity demand & N/A & N/A & 2 kW $\times$ 27 h/week \\
+        Peak power & N/A & N/A & 2 kW \\
+        Logistics & User drives & Truck delivery & None \\
+        Independence & Low & Medium & High \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Overnight Production Calculations}
+
+Utilizing off-peak electricity rates, a system can produce hydrogen primarily during night hours:
+
+\textbf{Scenario: 8-hour overnight window (22:00--06:00)}
+
+\begin{itemize}
+    \item Electrolyzer power: \SI{2}{kW}
+    \item Energy consumed per night: \SI{16}{kWh}
+    \item Hydrogen produced per night: $\frac{16}{54} \approx \SI{0.30}{kg}$
+    \item Weekly production (7 nights): \SI{2.1}{kg}
+    \item Driving range equivalent: 200--250 km/week
+\end{itemize}
+
+This matches typical commuter patterns without requiring daytime operation.
+
+\textbf{Extended operation scenario:}
+
+If the system operates 12 hours overnight (20:00--08:00):
+\begin{itemize}
+    \item Energy consumed: \SI{24}{kWh}
+    \item Hydrogen produced: \SI{0.44}{kg/night}
+    \item Weekly production: \SI{3.1}{kg}
+    \item Range equivalent: 300--400 km/week
+\end{itemize}
+
+\subsection{Grid Tariff Optimization}
+
+Time-of-use electricity pricing provides an economic advantage for overnight production:
+
+\begin{table}[htbp]
+    \centering
+    \caption{Example electricity tariff structures (2024 typical rates)}
+    \label{tab:electricity_tariffs}
+    \begin{tabular}{@{}lcccc@{}}
+        \toprule
+        \textbf{Region} & \textbf{Peak} & \textbf{Off-Peak} & \textbf{Ratio} & \textbf{Off-Peak Hours} \\
+        \midrule
+        France (EDF Tempo) & \EUR{0.27}/kWh & \EUR{0.13}/kWh & 2.1$\times$ & 22:00--06:00 \\
+        Germany & \EUR{0.35}/kWh & \EUR{0.25}/kWh & 1.4$\times$ & 22:00--06:00 \\
+        California (TOU) & \$0.45/kWh & \$0.20/kWh & 2.3$\times$ & 21:00--08:00 \\
+        UK (Economy 7) & \pounds0.30/kWh & \pounds0.10/kWh & 3.0$\times$ & 00:00--07:00 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\textbf{Cost calculation example (France):}
+\begin{itemize}
+    \item Hydrogen cost at peak rate: $54 \times 0.27 = $ \EUR{14.58}/kg
+    \item Hydrogen cost at off-peak: $54 \times 0.13 = $ \EUR{7.02}/kg
+    \item Station price comparison: \EUR{10--15}/kg
+    \item Off-peak advantage: 30--50\% cost reduction vs. station
+\end{itemize}
+
+\subsection{Elimination of Bottle Logistics}
+
+On-site generation eliminates the entire bottled hydrogen supply chain:
+
+\textbf{Bottled hydrogen challenges:}
+\begin{itemize}
+    \item Bottle rental fees: \EUR{5--15}/month per cylinder
+    \item Delivery charges: \EUR{30--50} per delivery
+    \item Minimum order quantities
+    \item Storage space for multiple cylinders
+    \item Safety certification for bottle storage
+    \item Dependency on delivery schedules
+\end{itemize}
+
+\textbf{On-site generation advantages:}
+\begin{itemize}
+    \item No recurring delivery costs
+    \item No bottle rental
+    \item Continuous availability
+    \item Smaller footprint (single buffer tank vs. multiple bottles)
+    \item Full control over production schedule
+    \item Integration with home solar PV possible
+\end{itemize}
+
+\subsection{Buffer Sizing for Overnight Operation}
+
+The buffer tank size determines the operational flexibility:
+
+\begin{equation}
+    V_{buffer} = \frac{m_{daily} \times M_{H_2}}{p_{buffer} \times Z \times R \times T} \times 10^6 \quad [\si{L}]
+    \label{eq:buffer_sizing}
+\end{equation}
+
+For \SI{0.5}{kg/day} production at \SI{30}{bar} buffer pressure:
+\begin{itemize}
+    \item Required volume: approximately \SI{200}{L} at atmospheric equivalent
+    \item At \SI{30}{bar}: approximately \SI{7}{L} physical volume
+    \item Practical buffer: 10--20 L provides margin for compressor cycling
+\end{itemize}
+
+The buffer decouples electrolyzer operation from compressor operation, enabling continuous low-rate electrolysis while the compressor operates in batch mode.

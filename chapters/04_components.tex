@@ -157,11 +157,25 @@ Water consumption is approximately \SI{1}{L} per \SI{111}{g} of hydrogen produce
 
 \section{Compression System}
 
+\subsection{Right-Sizing for Residential Application}
+
+A critical design principle for Hydrodomus is avoiding overspecification. Commercial hydrogen station compressors are designed for high throughput (fast fills in 3--5 minutes), requiring massive flow rates and power consumption. For overnight home generation, a much smaller compressor suffices:
+
+\textbf{Why station-scale equipment is inappropriate:}
+\begin{itemize}
+    \item Station compressors: 50--100 kg/h capacity, 50--100 kW power
+    \item Home requirement: 0.5 kg/day = 21 g/h, $<$1 kW power
+    \item Overspecification factor: 100$\times$ or more
+    \item Result: Unnecessary cost, noise, maintenance, and complexity
+\end{itemize}
+
 \subsection{Requirements}
+
+The compressor must match the electrolyzer output rate, not the vehicle fill rate. Since the vehicle is connected overnight, the buffer slowly accumulates compressed hydrogen:
 
 \begin{table}[htbp]
     \centering
-    \caption{Compressor requirements}
+    \caption{Compressor requirements for residential overnight operation}
     \label{tab:compressor_req}
     \begin{tabular}{@{}lc@{}}
         \toprule
@@ -169,14 +183,23 @@ Water consumption is approximately \SI{1}{L} per \SI{111}{g} of hydrogen produce
         \midrule
         Inlet pressure & 1--30 bar \\
         Outlet pressure & 700 bar \\
-        Flow rate & 0.5--1 Nm$^3$/h \\
+        Flow rate (production matching) & 0.3--0.6 Nm$^3$/h \\
+        Dispensing flow rate & 5--10 L/min at 700 bar \\
         Compression ratio (overall) & 23--700:1 \\
         Number of stages & 3--4 \\
-        Power consumption & 0.5--1 kW \\
-        Cooling & Air or water \\
+        Power consumption & 0.3--0.8 kW \\
+        Cooling & Air-cooled (sufficient for residential scale) \\
+        Noise level & $<$60 dB (residential compatibility) \\
         \bottomrule
     \end{tabular}
 \end{table}
+
+\textbf{Flow rate clarification:}
+\begin{itemize}
+    \item \textbf{Production rate}: 0.3--0.6 Nm$^3$/h matches electrolyzer output
+    \item \textbf{Dispensing rate}: 5--10 L/min at \SI{700}{bar} sufficient for slow vehicle fill
+    \item Buffer tank decouples production from dispensing
+\end{itemize}
 
 \subsection{Compressor Technology}
 

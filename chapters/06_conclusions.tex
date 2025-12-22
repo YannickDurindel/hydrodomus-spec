@@ -115,6 +115,329 @@ The economic case improves significantly with:
     \item Future reductions in equipment cost
 \end{itemize}
 
+\subsection{On-Site Generation vs. Bottled Hydrogen Delivery}
+
+An alternative to station refueling is home delivery of hydrogen cylinders. This section compares the economics of bottle delivery against on-site electrolysis.
+
+\subsubsection{Bottled Hydrogen Cost Structure}
+
+Industrial hydrogen delivered in cylinders has the following typical cost components:
+
+\begin{table}[htbp]
+    \centering
+    \caption{Bottled hydrogen delivery cost breakdown (European market, 2024)}
+    \label{tab:bottle_costs}
+    \begin{tabular}{@{}lcc@{}}
+        \toprule
+        \textbf{Cost Component} & \textbf{Unit Cost} & \textbf{Annual Cost (100 kg/yr)} \\
+        \midrule
+        Hydrogen gas (industrial grade) & \EUR{15--25}/kg & \EUR{1,500--2,500} \\
+        Cylinder rental (200 bar, 50 L) & \EUR{8--15}/month per cylinder & \EUR{200--360} \\
+        Delivery charge & \EUR{40--80} per delivery & \EUR{240--480} \\
+        Cylinder deposit (refundable) & \EUR{150--300} per cylinder & (one-time) \\
+        Regulator and fittings & \EUR{200--500} & (one-time) \\
+        \midrule
+        \textbf{Annual recurring cost} & & \textbf{\EUR{1,940--3,340}} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\textbf{Practical limitations of bottled hydrogen for automotive use:}
+\begin{itemize}
+    \item Industrial cylinders deliver at 200 bar maximum---cannot directly fill 700 bar vehicle tanks
+    \item Would require on-site compression anyway (defeating the purpose)
+    \item 50 L cylinder at 200 bar contains only $\sim$0.8 kg H$_2$ (one cylinder per week minimum)
+    \item Storage of multiple high-pressure cylinders requires safety certification
+    \item Delivery scheduling creates dependency and potential fuel gaps
+\end{itemize}
+
+\subsubsection{On-Site Electrolysis Cost Structure}
+
+\begin{table}[htbp]
+    \centering
+    \caption{On-site hydrogen generation cost breakdown}
+    \label{tab:onsite_costs}
+    \begin{tabular}{@{}lcc@{}}
+        \toprule
+        \textbf{Cost Component} & \textbf{Unit Cost} & \textbf{Annual Cost (100 kg/yr)} \\
+        \midrule
+        \multicolumn{3}{@{}l}{\textit{Capital costs (amortized over 15 years):}} \\
+        Electrolyzer system & \EUR{8,000--15,000} & \EUR{533--1,000} \\
+        Compressor (700 bar) & \EUR{5,000--10,000} & \EUR{333--667} \\
+        Storage and dispensing & \EUR{5,000--10,000} & \EUR{333--667} \\
+        \midrule
+        \multicolumn{3}{@{}l}{\textit{Operating costs:}} \\
+        Electricity (off-peak \EUR{0.13}/kWh) & 55 kWh/kg & \EUR{715} \\
+        Water & 10 L/kg & \EUR{20} \\
+        Maintenance & lump sum & \EUR{300--500} \\
+        \midrule
+        \textbf{Total annual cost} & & \textbf{\EUR{2,234--3,569}} \\
+        \textbf{With solar self-consumption} & & \textbf{\EUR{1,519--2,854}} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsubsection{Economic Comparison: Bottles vs. On-Site Generation}
+
+\begin{table}[htbp]
+    \centering
+    \caption{10-year total cost of ownership comparison}
+    \label{tab:tco_comparison}
+    \begin{tabular}{@{}lccc@{}}
+        \toprule
+        \textbf{Scenario} & \textbf{Year 1} & \textbf{Year 10} & \textbf{10-Year TCO} \\
+        \midrule
+        \multicolumn{4}{@{}l}{\textit{Bottled hydrogen (if 700 bar compression added):}} \\
+        Equipment + bottles & \EUR{8,000} & -- & \EUR{8,000} \\
+        Annual operating & \EUR{2,500} & \EUR{2,500} & \EUR{25,000} \\
+        \textbf{Total} & & & \textbf{\EUR{33,000}} \\
+        \midrule
+        \multicolumn{4}{@{}l}{\textit{Hydrodomus on-site generation (grid electricity):}} \\
+        Equipment & \EUR{25,000} & -- & \EUR{25,000} \\
+        Annual operating & \EUR{1,400} & \EUR{1,400} & \EUR{14,000} \\
+        \textbf{Total} & & & \textbf{\EUR{39,000}} \\
+        \midrule
+        \multicolumn{4}{@{}l}{\textit{Hydrodomus with solar PV (50\% self-consumption):}} \\
+        Equipment & \EUR{25,000} & -- & \EUR{25,000} \\
+        Annual operating & \EUR{900} & \EUR{900} & \EUR{9,000} \\
+        \textbf{Total} & & & \textbf{\EUR{34,000}} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsubsection{Key Finding: Bottles Are Not Viable for Automotive Use}
+
+The analysis reveals that \textbf{bottled hydrogen is not a practical solution} for home \gls{fcev} refueling:
+
+\begin{enumerate}
+    \item \textbf{Pressure mismatch}: Industrial bottles (200 bar) cannot fill automotive tanks (700 bar) directly
+    \item \textbf{Compression still required}: Adding a compressor negates the simplicity advantage of bottles
+    \item \textbf{Higher long-term cost}: Recurring delivery and rental fees exceed electricity costs
+    \item \textbf{Logistics burden}: Weekly deliveries, scheduling, and storage management
+    \item \textbf{Safety complexity}: Storing multiple high-pressure cylinders requires certification
+\end{enumerate}
+
+\textbf{On-site electrolysis advantages:}
+\begin{enumerate}
+    \item \textbf{Direct 700 bar production}: No intermediate pressure limitations
+    \item \textbf{Zero logistics}: Water and electricity are already available at home
+    \item \textbf{Predictable costs}: Electricity prices more stable than hydrogen commodity prices
+    \item \textbf{Energy independence}: Solar integration eliminates grid dependency
+    \item \textbf{Scalable}: Production rate adjustable to match consumption
+\end{enumerate}
+
+\subsubsection{Break-Even Analysis}
+
+The higher capital cost of on-site generation is offset by lower operating costs:
+
+\begin{equation}
+    t_{breakeven} = \frac{C_{electrolyzer} - C_{bottles,equipment}}{C_{bottles,annual} - C_{electrolyzer,annual}}
+\end{equation}
+
+With typical values:
+\begin{equation}
+    t_{breakeven} = \frac{25000 - 8000}{2500 - 1400} = \frac{17000}{1100} \approx 15.5 \text{ years}
+\end{equation}
+
+With solar self-consumption (50\%):
+\begin{equation}
+    t_{breakeven} = \frac{17000}{2500 - 900} = \frac{17000}{1600} \approx 10.6 \text{ years}
+\end{equation}
+
+\textbf{Conclusion}: On-site generation reaches cost parity with bottles in 10--15 years, with the additional benefits of convenience, independence, and no logistics burden. For users with existing solar PV installations, the economics are clearly favorable.
+
+\section{Startup Investment Requirements}
+
+\subsection{Minimum Viable Development Costs}
+
+Developing Hydrodomus from concept to market-ready product requires phased investment:
+
+\begin{table}[htbp]
+    \centering
+    \caption{Development phase investment requirements}
+    \label{tab:development_costs}
+    \begin{tabular}{@{}lrr@{}}
+        \toprule
+        \textbf{Phase} & \textbf{Investment (EUR)} & \textbf{Duration} \\
+        \midrule
+        Phase 1: Lab prototype & 15,000--25,000 & 6 months \\
+        Phase 2: High-pressure integration & 40,000--60,000 & 12 months \\
+        Phase 3: Certification testing & 50,000--100,000 & 12 months \\
+        Phase 4: Field trials (5 units) & 100,000--150,000 & 18 months \\
+        Phase 5: Production tooling & 200,000--500,000 & 12 months \\
+        \midrule
+        \textbf{Total to market} & \textbf{405,000--835,000} & 3--4 years \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Regional Cost Variations}
+
+Installation and permitting costs vary significantly by market:
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption{Estimated installation costs by region}
+    \label{tab:regional_costs}
+    \begin{tabular}{@{}lccc@{}}
+        \toprule
+        \textbf{Region} & \textbf{Equipment} & \textbf{Installation} & \textbf{Permitting} \\
+        \midrule
+        EU (average) & \EUR{25k--40k} & \EUR{3k--8k} & \EUR{1k--5k} \\
+        USA & \$30k--50k & \$5k--15k & \$2k--10k \\
+        Japan & \textyen3.5M--5.5M & \textyen0.5M--1M & \textyen0.3M--0.8M \\
+        China & CNY 180k--280k & CNY 20k--50k & CNY 10k--30k \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Available Subsidies and Incentives}
+
+Government support can significantly improve project economics:
+
+\textbf{European Union:}
+\begin{itemize}
+    \item EU Hydrogen Strategy funding programs
+    \item National hydrogen subsidies (Germany: up to 80\% for innovative projects)
+    \item Clean Hydrogen Joint Undertaking grants
+    \item VAT exemptions in some countries
+\end{itemize}
+
+\textbf{United States:}
+\begin{itemize}
+    \item Federal tax credits (45V Clean Hydrogen Production Credit)
+    \item California Clean Fuel Reward program
+    \item State-level incentives (varies by state)
+    \item DOE loan guarantees for demonstration projects
+\end{itemize}
+
+\textbf{Japan:}
+\begin{itemize}
+    \item METI hydrogen equipment subsidies (up to 50\%)
+    \item Municipal incentives in Tokyo, Osaka
+    \item ENE-FARM residential fuel cell program extension potential
+\end{itemize}
+
+\section{Target Customer Segments}
+
+\subsection{B2C (Business-to-Consumer) Markets}
+
+\textbf{1. Early Adopters and Environmental Pioneers}
+\begin{itemize}
+    \item Profile: High-income, technology-enthusiastic homeowners
+    \item Motivation: Environmental leadership, energy independence
+    \item Willingness to pay: Premium pricing acceptable
+    \item Market size: 1--3\% of potential \gls{fcev} owners
+    \item Geographic focus: California, Germany, Netherlands, Japan
+\end{itemize}
+
+\textbf{2. Rural and Remote \gls{fcev} Owners}
+\begin{itemize}
+    \item Profile: Homeowners $>$50 km from nearest hydrogen station
+    \item Motivation: Practicality, no alternative fueling option
+    \item Price sensitivity: Moderate (compared to station travel cost)
+    \item Market size: 40--60\% of potential \gls{fcev} owners in early markets
+    \item Geographic focus: Rural Europe, US Midwest, Australian outback
+\end{itemize}
+
+\textbf{3. Solar PV Owners Seeking Energy Independence}
+\begin{itemize}
+    \item Profile: Existing rooftop solar installation ($>$5 kW)
+    \item Motivation: Maximize self-consumption, grid independence
+    \item Value proposition: Use excess solar for fuel production
+    \item Market size: 5--10\% of solar homeowners with suitable capacity
+    \item Geographic focus: Australia, Southern Europe, Sunbelt USA
+\end{itemize}
+
+\textbf{4. Small Fleet Owners (1--5 Vehicles)}
+\begin{itemize}
+    \item Profile: Small businesses, family operations with multiple \glspl{fcev}
+    \item Motivation: Fuel cost control, operational simplicity
+    \item Use case: Delivery services, professional services, farm operations
+    \item Market size: 10--15\% of B2C addressable market
+\end{itemize}
+
+\subsection{B2B (Business-to-Business) Markets}
+
+\textbf{1. Automotive Dealerships}
+\begin{itemize}
+    \item Value proposition: Differentiation, customer convenience offering
+    \item Use case: Demo unit for customer experience, service center fueling
+    \item Sales model: Direct partnership with Toyota, Hyundai, BMW dealers
+    \item Revenue: Unit sales plus ongoing service contracts
+\end{itemize}
+
+\textbf{2. Property Developers (Hydrogen-Ready Homes)}
+\begin{itemize}
+    \item Value proposition: Future-proof premium developments
+    \item Use case: Pre-installed or prepared infrastructure in new builds
+    \item Geographic focus: California, Japan, Netherlands, Germany
+    \item Revenue: Bulk unit sales, maintenance contracts
+\end{itemize}
+
+\textbf{3. Corporate Fleet Managers}
+\begin{itemize}
+    \item Value proposition: Reduce fueling logistics, predictable costs
+    \item Use case: Company car pools, executive vehicles, service fleets
+    \item Market entry: Pilot programs with sustainability-focused corporations
+    \item Revenue: Multi-unit installations, long-term service agreements
+\end{itemize}
+
+\textbf{4. Renewable Energy Companies}
+\begin{itemize}
+    \item Value proposition: Power-to-gas demonstration, grid balancing
+    \item Use case: Wind/solar integration showcase, customer engagement
+    \item Partnership model: Co-development, co-branding opportunities
+    \item Revenue: Technology licensing, joint ventures
+\end{itemize}
+
+\textbf{5. Research Institutions}
+\begin{itemize}
+    \item Value proposition: Compact hydrogen generation for laboratories
+    \item Use case: Fuel cell research, materials testing, education
+    \item Sales approach: Academic pricing, research partnerships
+    \item Revenue: Unit sales, collaborative R\&D funding
+\end{itemize}
+
+\subsection{Global Market Analysis}
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \caption{Regional market attractiveness assessment}
+    \label{tab:market_analysis}
+    \begin{tabular}{@{}lccccc@{}}
+        \toprule
+        \textbf{Factor} & \textbf{EU} & \textbf{USA} & \textbf{Japan} & \textbf{Korea} & \textbf{China} \\
+        \midrule
+        FCEV population & Med & Low & High & High & Med \\
+        H$_2$ stations & Low & V. Low & Med & Med & Low \\
+        Regulations & High & Med & High & High & Med \\
+        Elec. cost & High & Med & High & Med & Low \\
+        Off-peak & Good & Good & Limited & Good & Good \\
+        Incentives & Strong & Strong & V. Strong & Strong & Strong \\
+        Solar potential & Good & Excellent & Mod & Mod & Excellent \\
+        \midrule
+        \textbf{Overall} & \textbf{High} & \textbf{Med+} & \textbf{V. High} & \textbf{High} & \textbf{Med} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\textbf{Priority Market Recommendations:}
+
+\begin{enumerate}
+    \item \textbf{Japan (Tier 1)}: Highest \gls{fcev} density, strong government support, established hydrogen culture, regulatory framework exists. Entry strategy: Partnership with Toyota or local energy company.
+
+    \item \textbf{Germany/Netherlands (Tier 1)}: Strong regulatory push, high environmental awareness, developed solar infrastructure. Entry strategy: TÜV certification, partnership with energy utilities.
+
+    \item \textbf{California (Tier 1)}: \gls{fcev} market leader in USA, strong incentives, solar-rich. Entry strategy: CARB certification, partnership with fuel cell vehicle dealers.
+
+    \item \textbf{South Korea (Tier 2)}: High \gls{fcev} adoption (Hyundai Nexo), government hydrogen roadmap. Entry strategy: KC certification, partnership with Hyundai network.
+
+    \item \textbf{Australia (Tier 2)}: Emerging hydrogen economy, excellent solar resources, vast distances to stations. Entry strategy: Focus on rural/remote markets.
+\end{enumerate}
+
 \section{Prototype Development Plan}
 
 \subsection{Phase 1: Laboratory Prototype}
